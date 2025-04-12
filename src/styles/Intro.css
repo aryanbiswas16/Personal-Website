@@ -17,11 +17,6 @@ html, body {
   box-sizing: border-box;
   width: 100%;
   margin: 0;
-  position: fixed; 
-  top: 0; 
-  left: 0;
-  right: 0;
-  z-index: 1; 
 }
 
 
@@ -111,7 +106,7 @@ html, body {
   font-size: 22px;
   font-weight: bolder;
   font-family: 'Fira Code', monospace;
-  align-self: left;
+  align-self: left;  
   padding: 10px 30px;
   cursor: pointer;
   border: 2px solid #40E0D0;
