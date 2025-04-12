@@ -1,6 +1,6 @@
 import React from "react";
 import "../styles/Intro.css";
-import Animation from "./Animation";
+import avatarImage from "../assets/avatar.png"; // Update this path to where your image is stored
 
 class Intro extends React.Component {
   constructor() {
@@ -8,37 +8,36 @@ class Intro extends React.Component {
     this.state = {
       expanded: true,
       activeKey: "1",
-      visible: true
+      visible: true,
     };
     this.handleSelect = this.handleSelect.bind(this);
   }
 
   handleSelect(eventKey) {
     this.setState({
-      activeKey: eventKey
+      activeKey: eventKey,
     });
   }
 
   render() {
     return (
       <div id="intro">
-        <Animation>
-          <div className="intro-title">
-            Hi, I'm <span className="intro-name">Your Name</span>
-          </div>
-          <div className="intro-subtitle">I create stuff sometimes.</div>
-          <div className="intro-desc">
-            I'm a software engineer based in Your Location. I'm passionate about
-            building software that makes a difference. I focus on creating
-            efficient, scalable, and user-friendly solutions.
-          </div>
-          <a
-            href="mailto:your.email@example.com"
-            className="intro-contact"
-          >
-            Contact Me
-          </a>
-        </Animation>
+        <img src={avatarImage} alt="Avatar" className="intro-avatar" />
+        <span className="intro-title">
+          hi, <span className="intro-name">Aryan</span> here.
+        </span>
+        <div className="intro-subtitle">I create stuff sometimes.</div>
+        <div className="intro-desc">
+          I'm a software engineer based in Toronto. I'm passionate about
+          building software that makes a difference. I focus on creating
+          efficient, scalable, and user-friendly solutions.
+        </div>
+        <a
+          href="mailto:aryanbiswas16@gmail.com"
+          className="intro-contact"
+        >
+          Say hi!
+        </a>
       </div>
     );
   }

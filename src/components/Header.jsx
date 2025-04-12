@@ -5,12 +5,12 @@ import GitHubIcon from '@mui/icons-material/GitHub';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import EmailIcon from '@mui/icons-material/Email';
 import ArticleIcon from '@mui/icons-material/Article';
-
+import "../styles/Header.css";
 function Header() {
   return (
-    <Navbar fixed="top" bg="dark" variant="dark" expand="lg" className="py-3">
+    <Navbar fixed="top" variant="dark" expand="lg" className="py-3">
       <Container>
-        <Navbar.Brand href="#" className="fs-2">Aryan</Navbar.Brand>
+        <Navbar.Brand href="#" className="fs-2">Aryan Biswas</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
