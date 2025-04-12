@@ -1,54 +1,110 @@
-#intro {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  margin: 0;  /* Changed from auto to 0 */
-  width: 100vw; /* Added to ensure full viewport width */
-  padding-top: 100px;
-  min-height: 100vh;
-  background-color: #1a1a2e;
+/* Add these CSS resets at the very top of your file */
+html, body {
+  margin: 0;
+  padding: 0;
   overflow-x: hidden;
-  box-sizing: border-box;
+  background-color: #1a1a2e;
 }
 
-.intro-content {
-  width: 100%;  /* Change from 100vw to 100% */
-  padding: 0 20px;
+/* Fix the intro container */
+#intro {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #1a1a2e;
   box-sizing: border-box;
+  width: 100%;
+  margin: 0;
+  position: fixed; /* Change from absolute to fixed */
+  top: 0; /* Add top: 0 */
+  left: 0;
+  right: 0;
+  z-index: 1; /* Add z-index to ensure proper stacking */
+}
+
+/* Update the content containers to distribute space better */
+.intro-text-content {
+  flex: 1;
+  max-width: 600px;
+  padding-right: 5%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  text-align: left;
+}
+
+/* Update avatar container */
+.intro-avatar {
+  flex: 1;
+  max-width: 400px;
+  height: auto;
+  object-fit: contain;
+  margin-left: 5%;
+  animation: floatAnimation 3s ease-in-out infinite;
+}
+
+/* Update the title container styles */
+.intro-title-container {
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+}
+
+.intro-title-container span {
+  display: inline-block;
+  font-family: 'Fira Code', monospace;
+  font-size: clamp(40px, 5vw, 86px);
+  color: #E0FFFF;
+  line-height: 1.2;
+}
+
+/* Only apply special styling to the name span */
+.intro-title-container .intro-name {
+  color: #40E0D0;
+  font-weight: bold;
+  text-shadow: 0 0 15px rgba(64, 224, 208, 0.4);
 }
 
 .intro-title {
   font-family: 'Fira Code', monospace;
-  font-size: 86px;
+  font-size: clamp(40px, 5vw, 86px); /* Responsive font size */
   color: #E0FFFF;
+  display: block;
+  text-align: left;
+  line-height: 1.2;
 }
 
 .intro-name {
-  font-family: 'Fira Code', monospace;
   color: #40E0D0;
   font-weight: bold;
-  font-size: 86px;
   text-shadow: 0 0 15px rgba(64, 224, 208, 0.4);
+  font-family: 'Fira Code', monospace;
+  font-size: clamp(40px, 5vw, 86px); /* Responsive font size */
+  display: block;
+  text-align: left;
 }
 
 .intro-subtitle {
-  margin-top: -36px;
+  margin-top: 20px;
   font-family: 'Fira Code', monospace;
   color: #7FFFD4;
-  text-align: center;
   font-weight: 300;
-  font-size: 48px;
+  font-size: clamp(24px, 3vw, 48px); /* Responsive font size */
+  text-align: left;
 }
 
+/* Update description */
 .intro-desc {
   color: #B0E0E6;
   font-family: 'Fira Code', monospace;
-  font-size: 22px;
-  text-align: center;
-  max-width: 600px;
-  padding-bottom: 50px;
+  font-size: clamp(16px, 1.5vw, 22px);
   line-height: 1.6;
+  text-align: left; /* Align text to the left */
+  margin: 30px 0;
+  max-width: 100%;
 }
 
 .intro-contact {
@@ -75,12 +131,12 @@ b {
   color: #40E0D0;
 }
 
+/* Update avatar position */
 .intro-avatar {
-  width: 15%;
-  height: 15%;
-  margin-bottom: 2rem;
-  position: relative;
-  z-index: 2;
+  width: 400px;
+  height: auto;
+  object-fit: contain;
+  margin-left: 50px;
   animation: floatAnimation 3s ease-in-out infinite;
 }
 
@@ -96,8 +152,12 @@ b {
   }
 }
 
-/* Tablet and smaller desktop screens */
+/* Media Queries */
 @media screen and (max-width: 1024px) {
+  #intro {
+    padding: 0 30px;
+  }
+
   .intro-title, .intro-name {
     font-size: 64px;
   }
@@ -112,13 +172,22 @@ b {
     max-width: 80%;
   }
 
-  #intro {
-    padding-top: 150px;
+  .intro-avatar {
+    width: 350px;
   }
 }
 
-/* For tablets */
 @media screen and (max-width: 768px) {
+  #intro {
+    flex-direction: column;
+    padding: 30px 20px;
+    left: 0;
+    right: 0;
+    margin-left: 0;
+    margin-right: 0;
+    width: 100%;
+  }
+
   .intro-title, .intro-name {
     font-size: 54px;
   }
@@ -128,13 +197,31 @@ b {
     margin-top: -20px;
   }
 
-  #intro {
-    padding-top: 100px;
+  .intro-text-content {
+    max-width: 100%;
+    text-align: center;
+    padding-right: 0;
+    align-items: center;
+  }
+
+  .intro-title, .intro-name, .intro-subtitle, .intro-desc {
+    text-align: center;
   }
 
   .intro-avatar {
-    width: 15%;
-    height: 15%;
+    width: min(280px, 70vw);
+    margin-left: 0;
+    margin-bottom: 2rem;
+    margin: 30px 0;
+  }
+
+  .intro-title-container {
+    flex-wrap: wrap;  /* Allow wrapping on smaller screens */
+    justify-content: center;
+  }
+
+  .intro-desc {
+    padding: 0 20px;
   }
 }
 
@@ -165,6 +252,10 @@ b {
     font-size: 16px;
     padding: 8px 20px;
   }
+
+  .intro-avatar {
+    width: 220px;
+  }
 }
 
 /* For very small devices */
@@ -180,11 +271,22 @@ b {
   .intro-desc {
     font-size: 14px;
   }
+
+  .intro-avatar {
+    width: 120px;
+  }
 }
 
 @media screen and (max-width: 480px) {
+  #intro {
+    padding: 30px 15px;
+  }
+
   .intro-avatar {
-    width: 10%;
-    height: 10%;
+    width: 180px;
+  }
+
+  .intro-title-container {
+    font-size: clamp(30px, 4vw, 40px);
   }
 }
