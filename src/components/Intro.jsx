@@ -2,25 +2,9 @@ import React from "react";
 import "../styles/Intro.css";
 import avatarImage from "../assets/avatar.png"; // Update this path to where your image is stored
 
-class Intro extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      expanded: true,
-      activeKey: "1",
-      visible: true,
-    };
-    this.handleSelect = this.handleSelect.bind(this);
-  }
-
-  handleSelect(eventKey) {
-    this.setState({
-      activeKey: eventKey,
-    });
-  }
-
-  render() {
-    return (
+const Intro = () => {
+  return (
+    <div className="page-container">
       <div id="intro">
         <img src={avatarImage} alt="Avatar" className="intro-avatar" />
         <div className="intro-text-content">
@@ -40,8 +24,8 @@ class Intro extends React.Component {
           </a>
         </div>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 export default Intro;

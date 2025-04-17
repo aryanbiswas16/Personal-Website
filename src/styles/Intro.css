@@ -6,17 +6,29 @@ html, body {
   background-color: #1a1a2e;
 }
 
+/* First, add this wrapper container */
+.page-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  background-color: #1a1a2e;
+}
 
+/* Update the #intro section */
 #intro {
   display: flex;
-  flex-direction: row-reverse;
-  justify-content: center;
+  justify-content: space-between; /* Changed from center */
   align-items: center;
   min-height: 100vh;
-  background-color: #1a1a2e;
-  box-sizing: border-box;
   width: 100%;
-  margin: 0;
+  padding: 0 50px;
+  box-sizing: border-box;
+  max-width: 1200px; /* Add max-width for better content containment */
+  margin: 0 auto; /* Center the container */
+  padding: 0 50px; /* Add consistent padding */
 }
 
 
@@ -29,6 +41,7 @@ html, body {
   align-items: flex-start;
   justify-content: center;
   text-align: left;
+  order: 1; /* Control order instead of using flex-direction */
 }
 
 
@@ -39,6 +52,7 @@ html, body {
   object-fit: contain;
   margin-left: 5%;
   animation: floatAnimation 3s ease-in-out infinite;
+  order: 2; /* Control order instead of using flex-direction */
 }
 
 /* Update the title container styles */
@@ -176,10 +190,6 @@ b {
   #intro {
     flex-direction: column;
     padding: 30px 20px;
-    left: 0;
-    right: 0;
-    margin-left: 0;
-    margin-right: 0;
     width: 100%;
   }
 
@@ -193,6 +203,7 @@ b {
   }
 
   .intro-text-content {
+    order: 2; /* Swap order on mobile */
     max-width: 100%;
     text-align: center;
     padding-right: 0;
@@ -204,6 +215,7 @@ b {
   }
 
   .intro-avatar {
+    order: 1; /* Swap order on mobile */
     width: min(280px, 70vw);
     margin-left: 0;
     margin-bottom: 2rem;

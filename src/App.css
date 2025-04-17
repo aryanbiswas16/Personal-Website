@@ -23,6 +23,9 @@ html {
     min-height: 100vh;
     width: 100%;
     color: #f9f9f9;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
   
   .App-logo {
@@ -37,9 +40,11 @@ html {
   
   #content {
     width: 100%;
+    max-width: 1200px;
     margin: 0 auto;
-    padding-top: 60px; /* This adds space for the fixed navbar */
-    position: relative; /* Add this */
+    padding-top: 60px;
+    position: relative;
+    box-sizing: border-box;
   }
   
   ::selection {
@@ -49,7 +54,8 @@ html {
   .section-header {
     display: flex;
     padding-bottom: 42px;
-    width: 100vw;
+    width: 100%;
+    position: relative;
   }
   
   .section-header::after {
