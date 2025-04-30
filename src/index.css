@@ -7,6 +7,12 @@
   color: rgba(255, 255, 255, 0.87);
   background-color: #242424;
 
+  --lightest-slate: #f9f9f9;
+  --slate: #b0b0b0;
+  --light-navy: #2a2a40;
+  --lightest-navy: #2f2f45;
+  --green-bright: #40E0D0;
+
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -27,7 +33,7 @@ body {
   padding: 0;
   min-width: 320px;
   min-height: 100vh;
-  background-color: #242424;
+  background-color: #1a1a2e;
   overflow-x: hidden;
 }
 

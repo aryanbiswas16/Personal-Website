@@ -1,0 +1,194 @@
+#experience {
+    min-height: 50vh;
+    margin: auto;
+    max-width: 1000px;
+    padding-top: 100px;
+    position: relative;
+}
+
+#experience::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    height: 80%;
+    background: radial-gradient(
+        circle at center,
+        rgba(64, 224, 208, 0.1) 0%,
+        rgba(26, 26, 46, 0) 70%
+    );
+    filter: blur(40px);
+    z-index: -1;
+    pointer-events: none;
+}
+
+.joblist-job-title {
+    font-family: "NTR", sans-serif;
+    font-size: 28px;
+    font-weight: bold;
+    color: var(--lightest-slate);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.joblist-job-company {
+    font-family: "NTR", sans-serif;
+    font-size: 28px;
+    color: var(--green-bright);
+    font-weight: bold;
+    text-shadow: 0 0 10px rgba(64, 224, 208, 0.3);
+}
+
+.joblist-duration {
+    font-family: "NTR", sans-serif;
+    font-size: 18px;
+    color: var(--slate);
+}
+
+#vertical-tabpanel {
+    margin-top: -28px;
+    padding-left: 25px;
+    backdrop-filter: blur(5px);
+    background: rgba(26, 26, 46, 0.3);
+    border-radius: 10px;
+    box-shadow: 0 8px 32px 0 rgba(64, 224, 208, 0.1);
+}
+
+.MuiTab-wrapper {
+    font-size: 16px;
+    text-align: left;
+    align-items: flex-start !important;
+    font-family: "NTR", sans-serif;
+}
+
+.MuiButtonBase-root {
+    outline: none !important;
+    color: var(--lightest-slate) !important;
+    transition: all 0.3s ease !important;
+}
+
+.MuiButtonBase-root:hover {
+    background: rgba(64, 224, 208, 0.1) !important;
+    box-shadow: 0 0 15px rgba(64, 224, 208, 0.2);
+}
+
+.PrivateTabIndicator-colorSecondary-5 {
+    background-color: var(--green-bright) !important;
+    box-shadow: 0 0 10px rgba(64, 224, 208, 0.4);
+}
+
+.jss5 {
+    background-color: var(--green-bright) !important;
+}
+
+.makeStyles-tabs-2 {
+    border-right: 1px solid rgba(64, 224, 208, 0.2) !important;
+}
+
+#experience .MuiTab-root {
+    padding: 6px 20px;
+}
+
+.MuiButtonBase-root:focus {
+    color: var(--green-bright) !important;
+}
+
+ul {
+    list-style: none;
+    margin-left: -40px;
+}
+
+.job-description li::before {
+    content: "▹    ";
+    color: var(--green-bright);
+    position: absolute;
+    left: 0;
+    text-shadow: 0 0 8px rgba(64, 224, 208, 0.4);
+}
+
+.job-description li {
+    position: relative;
+    padding-left: 30px;
+    padding-bottom: 16px;
+    font-size: 18px;
+    color: var(--slate);
+    transition: transform 0.3s ease;
+}
+
+.job-description li:hover {
+    transform: translateX(5px);
+}
+
+.job-description {
+    padding-top: 24px;
+    max-width: 650px;
+    font-family: "NTR", sans-serif;
+    font-size: 20px;
+}
+
+.job-description a,
+.job-description b {
+    font-size: 19px;
+    font-weight: bold;
+    color: var(--green-bright);
+    text-decoration: none;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.job-description a:hover,
+.job-description b:hover {
+    text-shadow: 0 0 8px rgba(64, 224, 208, 0.4);
+}
+
+.job-description a::after,
+.job-description b::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: var(--green-bright);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s ease;
+}
+
+.job-description a:hover::after,
+.job-description b:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+}
+
+@media only screen and (max-width: 600px) {
+    #experience {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    .jss1 {
+        height: unset !important;
+        flex-direction: column !important;
+    }
+
+    .makeStyles-root-1 {
+        height: unset !important;
+        width: unset;
+        flex-direction: column;
+    }
+
+    .joblist-job-title {
+        font-size: 22px;
+    }
+
+    .joblist-job-company {
+        font-size: 22px;
+    }
+
+    #experience::before {
+        width: 95%;
+        height: 90%;
+    }
+}
