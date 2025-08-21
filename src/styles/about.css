@@ -47,8 +47,18 @@
 }
 
 .about-image img {
-  max-width: 300px;
-  border-radius: 10px;
+  width: 400px;
+  height: 400px;
+  border-radius: 15px;
+  object-fit: cover;
+  object-position: center 90%;
+  box-shadow: 0 10px 30px -15px rgba(64, 224, 208, 0.3);
+  transition: transform 0.3s ease;
+  border: 2px solid rgba(64, 224, 208, 0.1);
+}
+
+.about-image img:hover {
+  transform: translateY(-7px);
 }
 
 .tech-stack {

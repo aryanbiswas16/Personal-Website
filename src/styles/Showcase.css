@@ -119,7 +119,8 @@
 .carousel.slide {
     max-width: 1000px;
     margin: 0 auto;
-    padding-bottom: 60px;
+    padding-bottom: 100px;
+    position: relative;
 }
 
 .carousel-inner {
@@ -130,6 +131,46 @@
     position: relative;
 }
 
+.carousel-item {
+    height: 500px;
+}
+
+.carousel-item img {
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+}
+
+.caption-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(to bottom, rgba(26, 26, 46, 0.2), rgba(26, 26, 46, 0.6));
+    padding: 2rem;
+    color: white;
+}
+
+.carousel-caption {
+    position: absolute;
+    left: 50% !important;
+    top: 50% !important;
+    right: auto !important;
+    bottom: auto !important;
+    transform: translate(-50%, -50%);
+    padding: 0;
+    text-align: center;
+    width: 100%;
+    max-width: 1000px;
+    z-index: 10;
+    font-family: "NTR", sans-serif;
+    user-select: none;
+}
+
 .carousel-inner::before {
     content: '';
     position: absolute;
@@ -138,68 +179,113 @@
     right: 0;
     bottom: 0;
     background: linear-gradient(
-        to top,
-        rgba(26, 26, 46, 0.9) 0%,
-        rgba(26, 26, 46, 0.5) 100%
+        180deg,
+        rgba(26, 26, 46, 0.1) 0%,
+        rgba(26, 26, 46, 0.3) 100%
     );
     z-index: 1;
-}
-
-.carousel-inner:hover {
-    transform: scale(1.02);
-    box-shadow: 0 12px 48px rgba(64, 224, 208, 0.2);
-    transition: all 0.4s ease;
 }
 
 .carousel img {
     object-fit: cover;
     height: 100%;
     width: 100%;
-    opacity: 0.7;
+    opacity: 0.9;
     transition: opacity 0.4s ease;
 }
 
-.carousel-inner:hover img {
-    opacity: 0.9;
-}
-
-.carousel-caption {
-    font-family: "NTR", sans-serif;
-    max-width: 500px;
-    right: unset !important;
-    left: 25% !important;
-    user-select: none;
-    position: relative;
-    z-index: 2;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-}
-
 .carousel-caption h3 {
-    font-size: 38px;
+    font-size: 72px;
     font-weight: bold;
-    color: var(--lightest-slate);
+    color: white;
     margin-bottom: 1rem;
+    text-transform: lowercase;
+    letter-spacing: 0px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    line-height: 1;
 }
 
 .carousel-caption p {
     font-family: "NTR", sans-serif;
-    font-weight: bold;
-    font-size: 18px;
-    color: var(--lightest-slate);
-    line-height: 1.6;
+    font-weight: normal;
+    font-size: 24px;
+    color: white;
+    line-height: 1.4;
+    margin: 1.5rem auto;
+    max-width: 700px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
 }
 
-.carousel-caption p.techStack {
+.carousel-caption .techStack {
+    display: inline-block;
     font-family: "NTR", sans-serif;
-    font-size: 14px;
+    font-size: 18px;
     font-weight: bold;
-    color: var(--green-bright);
+    color: #40E0D0;
+    padding: 0.4rem 0.8rem;
+    background: rgba(64, 224, 208, 0.15);
+    border-radius: 4px;
+    margin: 0.5rem 0;
     text-shadow: 0 0 8px rgba(64, 224, 208, 0.4);
 }
 
 .carousel-indicators .active {
     background-color: var(--green-bright);
     box-shadow: 0 0 10px rgba(64, 224, 208, 0.5);
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+    width: 5%;
+    opacity: 0.7;
+    transition: all 0.3s ease;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    z-index: 20;
+    background: none;
+}
+
+.carousel-control-prev {
+    left: 20px;
+}
+
+.carousel-control-next {
+    right: 20px;
+}
+
+.carousel-control-prev:hover,
+.carousel-control-next:hover {
+    opacity: 1;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    width: 40px;
+    height: 40px;
+    background-size: 100%;
+    filter: drop-shadow(0 0 8px rgba(64, 224, 208, 0.4));
+    background-color: rgba(26, 26, 46, 0.7);
+    border-radius: 50%;
+    padding: 12px;
+    border: 1px solid rgba(64, 224, 208, 0.3);
+}
+
+.carousel-indicators {
+    bottom: 50px;
+    margin-bottom: 0;
+    z-index: 15;
+}
+
+.carousel-indicators button {
+    width: 30px;
+    height: 3px;
+    background-color: rgba(64, 224, 208, 0.3);
+    transition: all 0.3s ease;
+}
+
+.carousel-indicators button.active {
+    background-color: #40E0D0;
 }
 
 @media only screen and (max-width: 1080px) {
@@ -234,4 +320,22 @@
     .card-desc {
         font-size: 16px;
     }
+}
+
+@media (max-width: 768px) {
+  .carousel-inner {
+    height: 400px;
+  }
+  
+  .carousel-item {
+    height: 400px;
+  }
+
+  .carousel-caption h3 {
+    font-size: 1.5rem;
+  }
+
+  .carousel-caption p {
+    font-size: 1rem;
+  }
 }

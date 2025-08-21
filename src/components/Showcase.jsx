@@ -5,44 +5,27 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import Carousel from "react-bootstrap/Carousel";
 import ExternalLinks from "./ExternalLinks.jsx";
 import { motion } from "framer-motion";
+import horrorgameImg from "../assets/horrorgame.png";
+import skip from "../assets/Skip_the Dishes.png";
 
 const Showcase = () => {
   const spotlightProjects = {
-    "No Man's Land": {
-      title: "no man's land",
+    "My Mom Needs Me Home For Dinner But There’s Monsters In The Office!": {
+      title: "My Mom Needs Me Home For Dinner But There’s Monsters In The Office!",
       desc:
-        "A third-person survival-mode game where you battle against time and space to return to Earth.",
+        "A third-person Comedy-Horror game where you play as a office worker trying to escape a monster invasion",
       techStack: "C# (UNITY)",
-      link: "https://github.com/slakh96/no-mans-land",
-      open: "https://gazijarin.itch.io/no-mans-land",
-      image: "/assets/nomansland.png"
+      link: "https://github.com/aryanbiswas16/HorrorGame",
+      open: "https://kamisama165.itch.io/my-mom-needs-me-home-for-dinner-but-theres-monsters-in-the-office",
+      image: horrorgameImg
     },
-    Truth: {
-      title: "truth",
+    "Skip the Dishes Coupon Scraper": {
+      title: "Skip the Dishes Coupon Scraper",
       desc:
-        "A three.js simulation of the planet system revolving around a monolith.",
-      techStack: "JAVASCRIPT (THREE.JS)",
-      link: "https://github.com/gazijarin/truth",
-      open: "https://gazijarin.github.io/Truth/",
-      image: "/assets/truth.png"
-    },
-    "Tall Tales": {
-      title: "tall tales",
-      desc:
-        "A multi-player story-telling web game for 3-5 players. Its usage of sockets to allow for concurrent gameplay, connecting friends across the internet.",
-      techStack: "NODE.JS (SOCKET.IO), REACT.JS, MONGODB",
-      link: "https://github.com/gazijarin/TallTales",
-      open: "https://talltales.herokuapp.com/",
-      image: "/assets/talltales.png"
-    },
-    Portfolio: {
-      title: "portfolio.js",
-      desc:
-        "A small JS library that helps with clear and succinct data presentation.",
-      techStack: "NODE.JS (EXPRESS.JS)",
-      link: "https://github.com/gazijarin/Portfolio.js",
-      open: "https://afternoon-ocean-92382.herokuapp.com/",
-      image: "/assets/portfolio.png"
+        "Created a chrome extension that scrapes Skip the Dishes for coupons and displays them in a user-friendly interface.",
+      techStack: "JavaScript, React, Chrome Extensions", 
+      link: "https://github.com/aryanbiswas16/Skip-The-Dishes-Promo-Scrapper",
+      image: skip
     }
   };
   const projects = {
@@ -111,6 +94,8 @@ const Showcase = () => {
     }
   };
 
+  console.log('Spotlight Projects:', spotlightProjects);
+
   return (
     <div id="projects">
       <motion.div 
@@ -135,24 +120,23 @@ const Showcase = () => {
                 src={spotlightProjects[key]["image"]}
                 alt={key}
               />
-              <motion.div 
-                className="caption-bg"
-                initial={{ y: 20, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.2 }}
-              >
-                <Carousel.Caption>
-                  <h3>{spotlightProjects[key]["title"]}</h3>
-                  <p>
-                    {spotlightProjects[key]["desc"]}
-                    <p className="techStack">{spotlightProjects[key]["techStack"]}</p>
-                  </p>
-                  <ExternalLinks
-                    githubLink={spotlightProjects[key]["link"]}
-                    openLink={spotlightProjects[key]["open"]}
-                  />
-                </Carousel.Caption>
-              </motion.div>
+              <div className="caption-bg">
+                <motion.div
+                  initial={{ y: 20, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ delay: 0.2 }}
+                >
+                  <Carousel.Caption>
+                    <h3>{spotlightProjects[key]["title"]}</h3>
+                    <p>{spotlightProjects[key]["desc"]}</p>
+                    <span className="techStack">{spotlightProjects[key]["techStack"]}</span>
+                    <ExternalLinks
+                      githubLink={spotlightProjects[key]["link"]}
+                      openLink={spotlightProjects[key]["open"]}
+                    />
+                  </Carousel.Caption>
+                </motion.div>
+              </div>
             </Carousel.Item>
           ))}
         </Carousel>

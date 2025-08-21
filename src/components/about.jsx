@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import "../styles/about.css";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import profilePic from "../assets/profile pic.jpg";
 
 const About = () => {
   useEffect(() => {
@@ -58,7 +59,7 @@ const About = () => {
           {two}
         </div>
         <div className="about-image" data-aos="fade-left">
-          <img alt="Profile" src={"../assets/profile.jpg"} />
+          <img alt="Profile" src={profilePic} />
         </div>
       </div>
     </div>
