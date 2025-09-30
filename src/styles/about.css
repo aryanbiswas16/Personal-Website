@@ -5,23 +5,35 @@
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  background-color: #1a1a2e;
+  background-color: transparent; /* show Vanta behind sections */
 }
 
 #about {
   width: 100%;
   padding: 100px 0;
-  background-color: #1a1a2e;
+  background-color: transparent;
   color: #f9f9f9;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.section-header {
+.about-box {
   width: 100%;
   max-width: 1200px;
-  padding: 0 50px;
+  margin: 0 auto;
+  padding: 30px 40px;
+  box-sizing: border-box;
+  background: rgba(26, 26, 46, 0.4); /* same translucent card look */
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px 0 rgba(64, 224, 208, 0.1);
+  border: 1px solid rgba(64, 224, 208, 0.08);
+}
+
+.section-header {
+  width: 100%;
+  padding: 0 10px 10px 10px; /* lighter inner padding; outer handled by box */
   box-sizing: border-box;
 }
 
@@ -29,9 +41,8 @@
   display: flex;
   gap: 50px;
   width: 100%;
-  max-width: 1200px;
   margin: 0 auto;
-  padding: 0 50px;
+  padding: 0; /* padding provided by about-box */
   box-sizing: border-box;
 }
 
@@ -111,10 +122,13 @@ b {
   }
 
   .section-header,
-  .about-content {
-    padding: 0 20px;
+  .about-box {
+    padding: 20px;
+    border-radius: 14px;
   }
-
+  .about-content {
+    padding: 0; /* keep content snug in mobile */
+  }
   .about-content {
     flex-direction: column;
   }

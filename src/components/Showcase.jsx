@@ -7,6 +7,7 @@ import ExternalLinks from "./ExternalLinks.jsx";
 import { motion } from "framer-motion";
 import horrorgameImg from "../assets/horrorgame.png";
 import skip from "../assets/Skip_the Dishes.png";
+import leetcode from "../assets/Screenshot_3.png";
 
 const Showcase = () => {
   const spotlightProjects = {
@@ -26,51 +27,24 @@ const Showcase = () => {
       techStack: "JavaScript, React, Chrome Extensions", 
       link: "https://github.com/aryanbiswas16/Skip-The-Dishes-Promo-Scrapper",
       image: skip
+    },
+    "Leetcode Helper Extension": {
+      title: "Leetcode Helper Extension",
+      desc:
+        "Created a Leetcode assistant that actively helps you solve problems based on the code in the text editor. It also helps by creating notes for every problem and solution for future reference. similar to new agentic offering form Leetcode before it existed",
+      techStack: "JavaScript, React, Chrome Extensions",
+      link: "https://github.com/aryanbiswas16/AI-leetcode-coach-extention/tree/main",
+      image: leetcode
     }
   };
   const projects = {
-    "TDSB Homework Management Interface": {
+    "American Sign Language Recognition Bot": {
       desc:
-        "An application created for Toronto District School Board, with a Flask back-end and a Vue front-end.",
-      techStack: "Python (Flask), Vue.js, Bootstrap, SQL",
-      link: "https://github.com/gazijarin/TDSBHomeworkManagement",
-      open: "https://tdsb-app.herokuapp.com/"
-    },
-    "Adam A.I.": {
-      desc:
-        "A self-learning A.I. that learns to traverse through a complex maze using the genetic algorithm.",
-      techStack: "Javascript, HTML / CSS",
-      link: "https://github.com/gazijarin/adamai",
-      open: "https://gazijarin.github.io/AdamAI/"
-    },
-    "Distributed Logging and Monitoring System": {
-      desc:
-        "A system that establishes an ORM connection to a Prisma client in order to communicate logs from microservices.",
-      techStack: "Node.js (Express.js), React.js, PostgreSQL",
-      link:
-        "https://github.com/gazijarin/Distributed-Logging-and-Monitoring-System"
-    },
-    "Odin Bot": {
-      desc:
-        "A Telegram bot that helps you excel on your daily tasks through Node NLP.",
-      techStack: "Javascript, Node.js, Natural NLP, Telegram API",
-      link: "https://github.com/gazijarin/OdinBot",
+        "Real-time ASL recognition using computer vision and deep learning. Captures hand landmarks with MediaPipe, formats datasets for training, trains a Keras Sequential model (TensorFlow) with scikit-learn utilities, and performs live webcam inference via OpenCV. Includes scripts for data collection, data formatting, training, and live recognition; the trained model is saved as asl_model.h5.",
+      techStack: "Python, OpenCV, MediaPipe, TensorFlow, Keras, scikit-learn",
+      link: "https://github.com/aryanbiswas16/SignLanguageRecognition",
       open: ""
     },
-    "Game Centre": {
-      desc:
-        "An Android app consisting of three board games, including multiplayer, autosave, user authentication, etc.",
-      techStack: "Java, Android Studio",
-      link: "https://github.com/gazijarin/gamecentre",
-      open: ""
-    },
-    "Minimax Stonehenge": {
-      desc:
-        "Two-player, zero-sum game with a strategic Minimax artificial intelligence.",
-      techStack: "Python",
-      link: "https://github.com/gazijarin/stonehenge",
-      open: ""
-    }
   };
 
   const containerVariants = {

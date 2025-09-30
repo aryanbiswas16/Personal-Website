@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from "react";
 import "../styles/Intro.css";
 import avatarImage from "../assets/avatar.png";
-import { motion } from "framer-motion";
+import { motion, useSpring } from "framer-motion";
 
 const Intro = () => {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  // Smooth spring-based cursor motion
   const [cursorVariant, setCursorVariant] = useState("default");
+  const cursorX = useSpring(0, { stiffness: 300, damping: 30, mass: 0.4 });
+  const cursorY = useSpring(0, { stiffness: 300, damping: 30, mass: 0.4 });
+  const cursorScale = useSpring(1, { stiffness: 250, damping: 20, mass: 0.3 });
 
   useEffect(() => {
     const mouseMove = (e) => {
-      setMousePosition({
-        x: e.clientX,
-        y: e.clientY
-      });
+      cursorX.set(e.clientX);
+      cursorY.set(e.clientY);
     };
 
     window.addEventListener("mousemove", mouseMove);
@@ -22,30 +23,22 @@ const Intro = () => {
     };
   }, []);
 
-  const variants = {
-    default: {
-      x: mousePosition.x - 16,
-      y: mousePosition.y - 16,
-    },
-    text: {
-      height: 150,
-      width: 150,
-      x: mousePosition.x - 75,
-      y: mousePosition.y - 75,
-      backgroundColor: "rgba(64, 224, 208, 0.1)",
-      mixBlendMode: "difference"
-    }
+  // Hover state simply scales the cursor via spring
+  const textEnter = () => {
+    setCursorVariant("text");
+    cursorScale.set(3); // grow subtly instead of changing size
   };
-
-  const textEnter = () => setCursorVariant("text");
-  const textLeave = () => setCursorVariant("default");
+  const textLeave = () => {
+    setCursorVariant("default");
+    cursorScale.set(1);
+  };
 
   return (
     <div className="page-container">
-      <motion.div 
+      <motion.div
         className="cursor"
-        variants={variants}
-        animate={cursorVariant}
+        style={{ left: cursorX, top: cursorY, scale: cursorScale }}
+        aria-hidden
       />
       <div id="intro">
         <motion.div 

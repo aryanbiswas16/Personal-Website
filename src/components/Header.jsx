@@ -18,20 +18,16 @@ function Header() {
             <Nav.Link href="#about">About</Nav.Link>
             <Nav.Link href="#experience">Experience</Nav.Link>
             <Nav.Link href="#projects">Projects</Nav.Link>
-            <Nav.Link href="#skills">Skills</Nav.Link>
           </Nav>
           <Nav className="ms-auto">
-            <Nav.Link href="mailto:your.email@example.com">
+            <Nav.Link href="mailto:aryanbiswas16@gmail.com">
               <EmailIcon style={{ fontSize: 20 }} />
             </Nav.Link>
-            <Nav.Link href="https://github.com/yourusername" target="_blank">
+            <Nav.Link href="https://github.com/aryanbiswas16" target="_blank">
               <GitHubIcon style={{ fontSize: 19 }} />
             </Nav.Link>
-            <Nav.Link href="https://linkedin.com/in/yourusername" target="_blank">
+            <Nav.Link href="https://www.linkedin.com/in/aryan-biswas/" target="_blank">
               <LinkedInIcon style={{ fontSize: 21 }} />
-            </Nav.Link>
-            <Nav.Link href="https://your-blog-url.com" target="_blank">
-              <ArticleIcon style={{ fontSize: 20 }} />
             </Nav.Link>
           </Nav>
         </Navbar.Collapse>

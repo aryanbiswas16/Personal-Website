@@ -44,22 +44,24 @@ const About = () => {
 
   return (
     <div id="about">
-      <div className="section-header" data-aos="fade-right">
-        <span className="section-title">/ about me</span>
-      </div>
-      <div className="about-content">
-        <div className="about-description" data-aos="fade-up">
-          {one}
-          {"Here are some technologies I have been working with:"}
-          <ul className="tech-stack">
-            {tech_stack.map((tech_item, i) => (
-              <li key={i} data-aos="fade-up" data-aos-delay={i * 100}>{tech_item}</li>
-            ))}
-          </ul>
-          {two}
+      <div className="about-box" data-aos="fade-up">
+        <div className="section-header" data-aos="fade-right">
+          <span className="section-title">/ about me</span>
         </div>
-        <div className="about-image" data-aos="fade-left">
-          <img alt="Profile" src={profilePic} />
+        <div className="about-content">
+          <div className="about-description" data-aos="fade-up">
+            {one}
+            {"Here are some technologies I have been working with:"}
+            <ul className="tech-stack">
+              {tech_stack.map((tech_item, i) => (
+                <li key={i} data-aos="fade-up" data-aos-delay={i * 100}>{tech_item}</li>
+              ))}
+            </ul>
+            {two}
+          </div>
+          <div className="about-image" data-aos="fade-left">
+            <img alt="Profile" src={profilePic} />
+          </div>
         </div>
       </div>
     </div>

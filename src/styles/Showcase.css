@@ -300,8 +300,30 @@
         padding: 20px;
     }
 
+    /* Show a smaller carousel on mobile instead of hiding it */
     .carousel {
-        display: none;
+        display: block;
+    }
+    .carousel-inner,
+    .carousel-item {
+        height: 260px;
+    }
+    .carousel-caption h3 {
+        font-size: 1.1rem;
+    }
+    .carousel-caption p {
+        font-size: 0.9rem;
+        max-width: 85%;
+    }
+    .carousel-control-prev,
+    .carousel-control-next {
+        width: 12%;
+    }
+    .carousel-control-prev-icon,
+    .carousel-control-next-icon {
+        width: 28px;
+        height: 28px;
+        padding: 8px;
     }
 
     #projects::before {

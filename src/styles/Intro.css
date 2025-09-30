@@ -14,7 +14,7 @@ html, body {
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  background-color: #1a1a2e;
+  background-color: transparent; /* allow Vanta to be visible */
 }
 
 /* Update the #intro section */
@@ -62,6 +62,7 @@ html, body {
   order: 1; /* Control order instead of using flex-direction */
   backdrop-filter: blur(5px);
   padding: 2rem;
+  box-sizing: border-box; /* include padding in width to avoid overflow */
   border-radius: 20px;
   background: rgba(26, 26, 46, 0.3);
   box-shadow: 0 8px 32px 0 rgba(64, 224, 208, 0.1);
@@ -208,16 +209,18 @@ b {
 
 /* Custom cursor styles */
 .cursor {
-  background-color: #40E0D0;
-  height: 32px;
-  width: 32px;
-  border-radius: 50%;
   position: fixed;
-  top: 0;
   left: 0;
+  top: 0;
+  width: 16px;
+  height: 16px;
+  margin-left: -8px; /* center on pointer */
+  margin-top: -8px;
+  border-radius: 50%;
+  background: rgba(64, 224, 208, 0.4);
+  box-shadow: 0 0 12px rgba(64, 224, 208, 0.4);
   pointer-events: none;
   z-index: 9999;
-  mix-blend-mode: difference;
 }
 
 /* Media Queries */
@@ -250,6 +253,7 @@ b {
     flex-direction: column;
     padding: 30px 20px;
     width: 100%;
+    align-items: center; /* center children horizontally */
   }
 
   .intro-title, .intro-name {
@@ -263,9 +267,13 @@ b {
 
   .intro-text-content {
     order: 2; /* Swap order on mobile */
-    max-width: 100%;
+    width: 100%;
+    max-width: 420px; /* readable width */
+    margin: 0 auto; /* center card */
     text-align: center;
     padding-right: 0;
+    padding-left: 0;
+    padding: 1.5rem; /* symmetric padding */
     align-items: center;
     background: rgba(26, 26, 46, 0.4);
   }
@@ -285,6 +293,8 @@ b {
   .intro-title-container {
     flex-wrap: wrap;  /* Allow wrapping on smaller screens */
     justify-content: center;
+    text-align: center;
+    width: 100%;
   }
 
   .intro-desc {
@@ -299,6 +309,11 @@ b {
   .cursor {
     display: none; /* Hide custom cursor on mobile */
   }
+
+  /* Center the CTA button on mobile */
+  .intro-contact {
+    align-self: center;
+  }
 }
 
 /* For mobile devices - improve existing media query */
@@ -306,6 +321,7 @@ b {
   #intro {
     padding-top: 80px;
     padding: 80px 15px 0;
+    align-items: center; /* ensure children centered on very small screens */
   }
 
   .intro-title, .intro-name {
