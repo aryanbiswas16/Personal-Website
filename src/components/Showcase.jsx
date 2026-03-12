@@ -38,9 +38,23 @@ const Showcase = () => {
     }
   };
   const projects = {
+    "DeepFakeGuard": {
+      desc:
+        "A multi-detector deepfake detection system with ensemble fusion. Combines DINOv3 (face-swap), D3 (temporal consistency), and LipFD (lip-sync) detectors with domain-aware trust weighting. Achieves 0.88 AUROC cross-dataset performance on FaceForensics++ to Celeb-DF.",
+      techStack: "Python, PyTorch, DINOv2, Streamlit, Computer Vision",
+      link: "https://github.com/aryanbiswas16/DeepFakeGuard",
+      open: ""
+    },
+    "Beacon CRM Assistant": {
+      desc:
+        "AI-powered consulting assistant with FastAPI backend, Next.js frontend, and Chrome extension for live transcript capture. Context-aware AI that pulls business context from documents to drive intelligent responses. Built for KingHacks 2026.",
+      techStack: "Python, FastAPI, Next.js, Chrome Extensions, AI/ML",
+      link: "https://github.com/aryanbiswas16/KingHacks2026",
+      open: "https://youtu.be/HUyS6nTOO0E"
+    },
     "American Sign Language Recognition Bot": {
       desc:
-        "Real-time ASL recognition using computer vision and deep learning. Captures hand landmarks with MediaPipe, formats datasets for training, trains a Keras Sequential model (TensorFlow) with scikit-learn utilities, and performs live webcam inference via OpenCV. Includes scripts for data collection, data formatting, training, and live recognition; the trained model is saved as asl_model.h5.",
+        "Real-time ASL recognition using computer vision and deep learning. Captures hand landmarks with MediaPipe, formats datasets for training, trains a Keras Sequential model (TensorFlow) with scikit-learn utilities, and performs live webcam inference via OpenCV.",
       techStack: "Python, OpenCV, MediaPipe, TensorFlow, Keras, scikit-learn",
       link: "https://github.com/aryanbiswas16/SignLanguageRecognition",
       open: ""
