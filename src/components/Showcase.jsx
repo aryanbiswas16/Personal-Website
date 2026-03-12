@@ -43,14 +43,18 @@ const Showcase = () => {
         "A multi-detector deepfake detection system with ensemble fusion. Combines DINOv3 (face-swap), D3 (temporal consistency), and LipFD (lip-sync) detectors with domain-aware trust weighting. Achieves 0.88 AUROC cross-dataset performance on FaceForensics++ to Celeb-DF.",
       techStack: "Python, PyTorch, DINOv2, Streamlit, Computer Vision",
       link: "https://github.com/aryanbiswas16/DeepFakeGuard",
-      open: ""
+      open: "",
+      featured: true,
+      highlight: "0.88 AUROC • CUCAI 2026"
     },
     "Beacon CRM Assistant": {
       desc:
         "AI-powered consulting assistant with FastAPI backend, Next.js frontend, and Chrome extension for live transcript capture. Context-aware AI that pulls business context from documents to drive intelligent responses. Built for KingHacks 2026.",
       techStack: "Python, FastAPI, Next.js, Chrome Extensions, AI/ML",
       link: "https://github.com/aryanbiswas16/KingHacks2026",
-      open: "https://youtu.be/HUyS6nTOO0E"
+      open: "https://youtu.be/HUyS6nTOO0E",
+      featured: true,
+      highlight: "KingHacks 2026 • Top 10"
     },
     "American Sign Language Recognition Bot": {
       desc:
@@ -139,7 +143,7 @@ const Showcase = () => {
         <ul className="projects-grid">
           {Object.keys(projects).map((key, i) => (
             <motion.li 
-              className="projects-card" 
+              className={`projects-card ${projects[key]["featured"] ? 'featured-card' : ''}`} 
               key={i}
               variants={cardVariants}
               whileHover={{ 
@@ -147,6 +151,12 @@ const Showcase = () => {
                 transition: { duration: 0.2 }
               }}
             >
+              {projects[key]["featured"] && (
+                <div className="featured-badge-card">★ Featured</div>
+              )}
+              {projects[key]["highlight"] && (
+                <div className="highlight-text">{projects[key]["highlight"]}</div>
+              )}
               <div className="card-header">
                 <motion.div 
                   className="folder-icon"
@@ -166,7 +176,11 @@ const Showcase = () => {
 
               <div className="card-title">{key}</div>
               <div className="card-desc">{projects[key]["desc"]}</div>
-              <div className="card-tech">{projects[key]["techStack"]}</div>
+              <div className="card-tech">
+                {projects[key]["techStack"].split(", ").map((tech, idx) => (
+                  <span key={idx} className="tech-tag">{tech}</span>
+                ))}
+              </div>
             </motion.li>
           ))}
         </ul>

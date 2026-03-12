@@ -45,12 +45,72 @@
     border: 1px solid rgba(64, 224, 208, 0.1);
     box-shadow: 0 8px 32px 0 rgba(64, 224, 208, 0.1);
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    overflow: hidden;
 }
 
 .projects-card:hover {
     transform: translateY(-10px) rotateX(5deg);
     background: rgba(26, 26, 46, 0.6);
     box-shadow: 0 15px 45px rgba(64, 224, 208, 0.2);
+}
+
+/* Featured Card Styling */
+.featured-card {
+    background: linear-gradient(135deg, rgba(26, 26, 46, 0.6) 0%, rgba(64, 224, 208, 0.1) 100%);
+    border: 1px solid rgba(64, 224, 208, 0.3);
+    box-shadow: 0 8px 32px 0 rgba(64, 224, 208, 0.2);
+}
+
+.featured-card:hover {
+    box-shadow: 0 20px 60px rgba(64, 224, 208, 0.3);
+    border-color: rgba(64, 224, 208, 0.5);
+}
+
+.featured-badge-card {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+
+.highlight-text {
+    font-size: 0.85rem;
+    color: #40E0D0;
+    margin-bottom: 12px;
+    font-weight: 600;
+    text-shadow: 0 0 10px rgba(64, 224, 208, 0.3);
+}
+
+/* Tech Tags */
+.card-tech {
+    font-family: "NTR", sans-serif;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: auto;
+}
+
+.tech-tag {
+    background: rgba(64, 224, 208, 0.1);
+    border: 1px solid rgba(64, 224, 208, 0.2);
+    color: #40E0D0;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    transition: all 0.3s ease;
+}
+
+.tech-tag:hover {
+    background: rgba(64, 224, 208, 0.2);
+    transform: translateY(-2px);
 }
 
 .card-header {
