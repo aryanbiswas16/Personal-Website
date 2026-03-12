@@ -4,16 +4,20 @@
   background: #40E0D0;
   border-radius: 50%;
   position: fixed;
+  top: -4px;
+  left: -4px;
   pointer-events: none;
   z-index: 99999;
-  transform: translate(-50%, -50%);
-  transition: width 0.2s, height 0.2s, background 0.2s;
+  will-change: transform;
   box-shadow: 0 0 10px rgba(64, 224, 208, 0.8);
+  transition: width 0.15s, height 0.15s, background 0.15s, top 0.15s, left 0.15s;
 }
 
 .cursor-dot.clicking {
   width: 4px;
   height: 4px;
+  top: -2px;
+  left: -2px;
   background: #fff;
 }
 
@@ -23,15 +27,19 @@
   border: 2px solid rgba(64, 224, 208, 0.5);
   border-radius: 50%;
   position: fixed;
+  top: -20px;
+  left: -20px;
   pointer-events: none;
   z-index: 99998;
-  transform: translate(-50%, -50%);
-  transition: all 0.15s ease-out;
+  will-change: transform;
+  transition: width 0.2s, height 0.2s, border-color 0.2s, background 0.2s, top 0.2s, left 0.2s;
 }
 
 .cursor-ring.hovering {
   width: 60px;
   height: 60px;
+  top: -30px;
+  left: -30px;
   border-color: rgba(64, 224, 208, 0.8);
   background: rgba(64, 224, 208, 0.1);
 }
@@ -39,6 +47,8 @@
 .cursor-ring.clicking {
   width: 30px;
   height: 30px;
+  top: -15px;
+  left: -15px;
   border-color: #fff;
 }
 

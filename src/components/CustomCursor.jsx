@@ -1,55 +1,64 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import '../styles/CustomCursor.css';
 
 const CustomCursor = () => {
-  const dotRef = useRef({ x: 0, y: 0 });
-  const ringRef = useRef({ x: 0, y: 0 });
-  const targetRef = useRef({ x: 0, y: 0 });
-  const [dotPos, setDotPos] = useState({ x: 0, y: 0 });
-  const [ringPos, setRingPos] = useState({ x: 0, y: 0 });
-  const [isHovering, setIsHovering] = useState(false);
-  const [isClicking, setIsClicking] = useState(false);
+  const dotRef = useRef(null);
+  const ringRef = useRef(null);
 
   useEffect(() => {
     if (window.matchMedia('(pointer: coarse)').matches) return;
 
+    const dot = dotRef.current;
+    const ring = ringRef.current;
+    if (!dot || !ring) return;
+
+    let mouseX = 0;
+    let mouseY = 0;
+    let ringX = 0;
+    let ringY = 0;
     let rafId;
-    let isActive = true;
+    let isHovering = false;
+    let isClicking = false;
 
     const handleMove = (e) => {
-      targetRef.current = { x: e.clientX, y: e.clientY };
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      // Move dot instantly with transform
+      dot.style.transform = `translate(${mouseX}px, ${mouseY}px)`;
     };
 
     const animate = () => {
-      if (!isActive) return;
-
-      // Dot follows instantly
-      dotRef.current = targetRef.current;
-
-      // Ring follows with smooth delay (higher lerp = more delay/smoothness)
-      ringRef.current.x += (targetRef.current.x - ringRef.current.x) * 0.12;
-      ringRef.current.y += (targetRef.current.y - ringRef.current.y) * 0.12;
-
-      setDotPos(dotRef.current);
-      setRingPos({ ...ringRef.current });
-
+      // Smooth follow for ring
+      ringX += (mouseX - ringX) * 0.08;
+      ringY += (mouseY - ringY) * 0.08;
+      
+      ring.style.transform = `translate(${ringX}px, ${ringY}px)`;
       rafId = requestAnimationFrame(animate);
     };
 
-    const handleDown = () => setIsClicking(true);
-    const handleUp = () => setIsClicking(false);
+    const handleDown = () => {
+      isClicking = true;
+      dot.classList.add('clicking');
+      ring.classList.add('clicking');
+    };
+
+    const handleUp = () => {
+      isClicking = false;
+      dot.classList.remove('clicking');
+      ring.classList.remove('clicking');
+    };
 
     const handleOver = (e) => {
-      const t = e.target;
-      if (t.closest('a, button, .projects-card, .btn-primary, .btn-secondary')) {
-        setIsHovering(true);
+      if (e.target.closest('a, button, .projects-card, [role="button"]')) {
+        isHovering = true;
+        ring.classList.add('hovering');
       }
     };
 
     const handleOut = (e) => {
-      const t = e.target;
-      if (t.closest('a, button, .projects-card, .btn-primary, .btn-secondary')) {
-        setIsHovering(false);
+      if (e.target.closest('a, button, .projects-card, [role="button"]')) {
+        isHovering = false;
+        ring.classList.remove('hovering');
       }
     };
 
@@ -62,7 +71,6 @@ const CustomCursor = () => {
     rafId = requestAnimationFrame(animate);
 
     return () => {
-      isActive = false;
       cancelAnimationFrame(rafId);
       window.removeEventListener('mousemove', handleMove);
       window.removeEventListener('mousedown', handleDown);
@@ -78,10 +86,8 @@ const CustomCursor = () => {
 
   return (
     <>
-      <div className={`cursor-dot ${isClicking ? 'clicking' : ''}`}
-        style={{ left: dotPos.x, top: dotPos.y }} />
-      <div className={`cursor-ring ${isHovering ? 'hovering' : ''} ${isClicking ? 'clicking' : ''}`}
-        style={{ left: ringPos.x, top: ringPos.y }} />
+      <div ref={dotRef} className="cursor-dot" />
+      <div ref={ringRef} className="cursor-ring" />
     </>
   );
 };
