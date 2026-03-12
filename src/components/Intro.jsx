@@ -1,121 +1,159 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import "../styles/Intro.css";
-import avatarImage from "../assets/avatar.png";
-import { motion, useSpring } from "framer-motion";
+import Typewriter from "typewriter-effect";
+import { motion } from "framer-motion";
+import avatar from "../assets/avatar.png";
 
 const Intro = () => {
-  // Smooth spring-based cursor motion
-  const [cursorVariant, setCursorVariant] = useState("default");
-  const cursorX = useSpring(0, { stiffness: 300, damping: 30, mass: 0.4 });
-  const cursorY = useSpring(0, { stiffness: 300, damping: 30, mass: 0.4 });
-  const cursorScale = useSpring(1, { stiffness: 250, damping: 20, mass: 0.3 });
-
-  useEffect(() => {
-    const mouseMove = (e) => {
-      cursorX.set(e.clientX);
-      cursorY.set(e.clientY);
-    };
-
-    window.addEventListener("mousemove", mouseMove);
-
-    return () => {
-      window.removeEventListener("mousemove", mouseMove);
-    };
-  }, []);
-
-  // Hover state simply scales the cursor via spring
-  const textEnter = () => {
-    setCursorVariant("text");
-    cursorScale.set(3); // grow subtly instead of changing size
-  };
-  const textLeave = () => {
-    setCursorVariant("default");
-    cursorScale.set(1);
-  };
-
   return (
-    <div className="page-container">
-      <motion.div
-        className="cursor"
-        style={{ left: cursorX, top: cursorY, scale: cursorScale }}
-        aria-hidden
-      />
-      <div id="intro">
+    <div id="intro">
+      <div className="intro-container">
         <motion.div 
-          className="intro-text-content"
-          initial={{ opacity: 0, x: -50 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          onMouseEnter={textEnter}
-          onMouseLeave={textLeave}
+          className="intro-content"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
         >
-          <div className="intro-title-container">
-            <motion.span
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-            >
-              hi,
-            </motion.span>
-            <motion.span 
-              className="intro-name"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.5 }}
-            >
-              Aryan
-            </motion.span>
-            <motion.span
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.7 }}
-            >
-              here.
-            </motion.span>
+          <div className="intro-badge">
+            <span className="badge-dot"></span>
+            Available for opportunities
           </div>
-          <motion.div 
-            className="intro-subtitle"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.9 }}
-          >
-            I create stuff sometimes.
-          </motion.div>
-          <motion.div 
-            className="intro-desc"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 1.1 }}
-          >
-            I'm a software engineer based in Toronto. I'm passionate about
-            building software that makes a difference. I focus on creating
-            efficient, scalable, and user-friendly solutions.
-          </motion.div>
-          <motion.a 
-            href="mailto:aryanbiswas16@gmail.com" 
-            className="intro-contact"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 1.3 }}
-            whileHover={{ 
-              scale: 1.05,
-              backgroundColor: "rgba(64, 224, 208, 0.1)",
-            }}
-            whileTap={{ scale: 0.95 }}
-          >
-            Say hi!
-          </motion.a>
+          
+          <h1 className="intro-title">
+            Hi, I'm{" "}
+            <span className="gradient-name">Aryan Biswas</span>
+          </h1>
+          
+          <div className="typewriter-wrapper">
+            <Typewriter
+              options={{
+                strings: [
+                  "Software Engineer",
+                  "AI/ML Enthusiast", 
+                  "Full Stack Developer",
+                  "Deepfake Detection Researcher",
+                  "Hackathon Winner"
+                ],
+                autoStart: true,
+                loop: true,
+                deleteSpeed: 50,
+                delay: 80,
+              }}
+            />
+          </div>
+          
+          <p className="intro-description">
+            Building intelligent systems that make a difference. 
+            From deepfake detection to AI-powered CRM assistants, 
+            I love turning complex problems into elegant solutions.
+          </p>
+          
+          <div className="intro-buttons">
+            <motion.a 
+              href="#projects"
+              className="btn-primary"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              View My Work
+              <span className="btn-arrow">→</span>
+            </motion.a>
+            <motion.a 
+              href="mailto:aryanbiswas16@gmail.com"
+              className="btn-secondary"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              Say Hi!
+            </motion.a>
+          </div>
+          
+          <div className="social-links">
+            <motion.a 
+              href="https://github.com/aryanbiswas16" 
+              target="_blank"
+              rel="noopener noreferrer"
+              className="social-link"
+              whileHover={{ y: -5 }}
+            >
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+              </svg>
+            </motion.a>
+            <motion.a 
+              href="https://linkedin.com/in/aryanbiswas" 
+              target="_blank"
+              rel="noopener noreferrer"
+              className="social-link"
+              whileHover={{ y: -5 }}
+            >
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+              </svg>
+            </motion.a>
+            <motion.a 
+              href="mailto:aryanbiswas16@gmail.com"
+              className="social-link"
+              whileHover={{ y: -5 }}
+            >
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+              </svg>
+            </motion.a>
+          </div>
         </motion.div>
-        <motion.img 
-          src={avatarImage} 
-          alt="Avatar" 
-          className="intro-avatar"
-          initial={{ opacity: 0, x: 50 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          whileHover={{ scale: 1.05 }}
-        />
+        
+        <motion.div 
+          className="intro-visual"
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <div className="avatar-container">
+            <div className="avatar-glow"></div>
+            <div className="avatar-ring"></div>
+            <img src={avatar} alt="Aryan Biswas" className="avatar-image" />
+          </div>
+          
+          <div className="floating-cards">
+            <motion.div 
+              className="float-card card-1"
+              animate={{ y: [0, -15, 0] }}
+              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+            >
+              <span className="card-icon">🧠</span>
+              <span className="card-text">AI/ML</span>
+            </motion.div>
+            <motion.div 
+              className="float-card card-2"
+              animate={{ y: [0, 15, 0] }}
+              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+            >
+              <span className="card-icon">💻</span>
+              <span className="card-text">Full Stack</span>
+            </motion.div>
+            <motion.div 
+              className="float-card card-3"
+              animate={{ y: [0, -10, 0] }}
+              transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
+            >
+              <span className="card-icon">🔬</span>
+              <span className="card-text">Research</span>
+            </motion.div>
+          </div>
+        </motion.div>
       </div>
+      
+      <motion.div 
+        className="scroll-indicator"
+        animate={{ y: [0, 10, 0] }}
+        transition={{ duration: 2, repeat: Infinity }}
+      >
+        <div className="mouse">
+          <div className="wheel"></div>
+        </div>
+        <span>Scroll to explore</span>
+      </motion.div>
     </div>
   );
 };
