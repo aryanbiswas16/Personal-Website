@@ -8,16 +8,14 @@ const TypewriterHero = () => {
   const [loopNum, setLoopNum] = useState(0);
   
   const phrases = [
-    'Software Engineer @ BMO',
-    'Project Lead @ QMind',
-    'Deepfake Detection Researcher',
-    'Pro Gamer 🎮',
-    'Professional Home Cook 👨‍🍳',
-    'AI/ML Enthusiast',
+    'Software Engineer',
+    'AI Researcher',
+    'Deepfake Detection Expert',
     'Full Stack Developer',
-    'Hackathon Winner 🏆',
-    'Teaching Assistant',
-    'Chrome Extension Builder'
+    'Pro Gamer',
+    'Chef in Training',
+    'Dog Dad',
+    'Coffee Enthusiast'
   ];
   
   const period = 2000;
