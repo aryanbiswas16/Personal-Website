@@ -13,48 +13,47 @@ const Experience = () => {
 
   const experiences = [
     {
+      company: "QMind",
+      position: "Project Lead",
+      duration: "May 2025 — Present",
+      location: "Kingston, ON",
+      achievements: [
+        "Led a 5-person team to build DeepfakeGuard, an open-source multi-modal deepfake detection toolkit (Python, PyTorch, Streamlit); authored research report and selected for spotlight presentation at CUCAI 2026.",
+        "Trained a Vision Transformer detector using parameter-efficient fine-tuning, achieving 0.88 AUROC on cross-dataset evaluation and outperforming established baselines by 23 points.",
+        "Architected an ensemble fusion system combining three specialized detection models (face-artifact, lip-sync audio-visual, temporal-motion) with weighted scoring and applicability gating to handle diverse deepfake types.",
+        "Integrated an LLM-powered explainability layer that validates ensemble outputs by identifying when individual detection modalities are skewed or non-applicable, providing structured natural-language analysis grounded in per-detector scores and model-specific limitations."
+      ]
+    },
+    {
       company: "Bank of Montreal (BMO)",
-      position: "Software Developer — Contract via TCS (Full-Time)",
-      duration: "Oct 2024 — Present",
+      position: "Software Developer (Staffed via TCS)",
+      duration: "October 2024 — August 2025",
       location: "Toronto, ON",
       achievements: [
-        "Co-developed a generative-AI Figma→Angular converter (responsive, accessible); backed by a $10M production investment and later exposed as an MCP server for GitHub Copilot integration.",
-        "Automated QA test-case authoring and execution in ALM using GenAI, accelerating regression coverage and reducing manual effort.",
-        "Created a GitHub Copilot extension fine-tuned for AngularJS→Angular upgrading to automate safe API migrations and modernize legacy components."
+        "Built a GenAI Figma to Angular POC end-to-end; shipped core logic as an MCP server integrated with GitHub Copilot to accelerate UI scaffolding for internal teams.",
+        "Automated ALM test-case drafting using LLM agents and reusable prompts/tools; reduced manual QA authoring effort and improved regression turnaround time by an estimated 40%.",
+        "Developed an agentic system to assist with AngularJS to Angular migrations; automated safe upgrades and refactors across deprecated modules/components supporting active production sites used by BMO.",
+        "Shipped production-grade systems impacting 100+ internal users and multiple active customer-facing applications, demonstrating end-to-end ownership from design through deployment."
       ]
     },
     {
       company: "Tata Consultancy Services (TCS)",
       position: "Software Developer Intern",
-      duration: "May 2024 — Present",
+      duration: "May 2024 — September 2024",
       location: "Toronto, ON",
       achievements: [
-        "Built a churn risk prediction model with XGBoost for BMO business banking while at TCS, enabling proactive outreach to at-risk clients.",
-        "Implemented OCR-based translation pipelines for RBC to support multilingual document workflows across enterprise systems.",
-        "Automated Enbridge’s SharePoint migration by creating custom tools that eliminated manual data transfer.",
-        "Developed a resume-screening tool using semantic vectorization, reducing manual review time by 75%.",
-        "Led development of a ROS 2–based autonomous wheelchair using A*/RRT* planning and YOLO for obstacle detection.",
-        "Prototyped a food calorie estimation tool using photogrammetry and 3D computer vision."
+        "Designed and deployed a churn-risk prediction model for business banking customers using XGBoost; provided actionable customer segments to support retention strategies.",
+        "Delivered an OCR + machine-translation pipeline for RBC to localize English image-based documents to French with zero visible formatting drift; shipped to production and processed 1000+ documents.",
+        "Built a resume screener using vector embeddings and cosine similarity; reduced manual screening time by 75% and processed 500+ applicant profiles."
       ]
     },
     {
-      company: "QMind (Queen’s AI Club)",
-      position: "Project Manager — AI Research",
-      duration: "May 2025 — Present",
-      location: "Kingston, ON",
-      achievements: [
-        "Will present our research paper and live demo at CUCAI, Canada’s largest university AI conference.",
-        "Project: deepfake/AI-video detection combining spatial artifact analysis with temporal consistency; manage a 6-person team, milestones, and weekly sprints."
-      ]
-    },
-    {
-      company: "Queen’s University",
+      company: "Queen's University",
       position: "Undergraduate Teaching Assistant",
-      duration: "Sept 2022 — Apr 2023",
+      duration: "September 2022 — April 2023",
       location: "Kingston, ON",
       achievements: [
-        "Taught tutorials and held office hours for CISC 101 and 121, supporting 100+ students with assignments and exams.",
-        "Built an autograder system to streamline marking, reducing grading time by 36%."
+        "Mentored 100+ students (CISC 101, CISC 121); built an autograder that reduced instructor grading time by 36%, enabling faster feedback cycles."
       ]
     }
   ];
