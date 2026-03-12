@@ -2,107 +2,86 @@ import React, { useEffect, useState, useRef } from 'react';
 import '../styles/CustomCursor.css';
 
 const CustomCursor = () => {
-  const cursorRef = useRef({ x: 0, y: 0 });
-  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const dotRef = useRef({ x: 0, y: 0 });
+  const ringRef = useRef({ x: 0, y: 0 });
+  const targetRef = useRef({ x: 0, y: 0 });
+  const [dotPos, setDotPos] = useState({ x: 0, y: 0 });
+  const [ringPos, setRingPos] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
   const [isClicking, setIsClicking] = useState(false);
-  const rafRef = useRef();
 
   useEffect(() => {
-    // Check for touch device
-    if (window.matchMedia('(pointer: coarse)').matches) {
-      return;
-    }
+    if (window.matchMedia('(pointer: coarse)').matches) return;
 
-    let targetX = 0;
-    let targetY = 0;
+    let rafId;
+    let isActive = true;
 
-    const updatePosition = (e) => {
-      targetX = e.clientX;
-      targetY = e.clientY;
+    const handleMove = (e) => {
+      targetRef.current = { x: e.clientX, y: e.clientY };
     };
 
     const animate = () => {
-      // Smooth lerp for the ring
-      cursorRef.current.x += (targetX - cursorRef.current.x) * 0.15;
-      cursorRef.current.y += (targetY - cursorRef.current.y) * 0.15;
-      
-      setPosition({
-        x: cursorRef.current.x,
-        y: cursorRef.current.y
-      });
-      
-      rafRef.current = requestAnimationFrame(animate);
+      if (!isActive) return;
+
+      // Dot follows instantly
+      dotRef.current = targetRef.current;
+
+      // Ring follows with smooth delay (higher lerp = more delay/smoothness)
+      ringRef.current.x += (targetRef.current.x - ringRef.current.x) * 0.12;
+      ringRef.current.y += (targetRef.current.y - ringRef.current.y) * 0.12;
+
+      setDotPos(dotRef.current);
+      setRingPos({ ...ringRef.current });
+
+      rafId = requestAnimationFrame(animate);
     };
 
-    const handleMouseDown = () => setIsClicking(true);
-    const handleMouseUp = () => setIsClicking(false);
+    const handleDown = () => setIsClicking(true);
+    const handleUp = () => setIsClicking(false);
 
-    const handleMouseOver = (e) => {
-      const target = e.target;
-      if (target.tagName === 'A' || 
-          target.tagName === 'BUTTON' || 
-          target.closest('a') || 
-          target.closest('button') ||
-          target.classList.contains('projects-card') ||
-          target.classList.contains('btn-primary') ||
-          target.classList.contains('btn-secondary')) {
+    const handleOver = (e) => {
+      const t = e.target;
+      if (t.closest('a, button, .projects-card, .btn-primary, .btn-secondary')) {
         setIsHovering(true);
       }
     };
 
-    const handleMouseOut = (e) => {
-      const target = e.target;
-      if (target.tagName === 'A' || 
-          target.tagName === 'BUTTON' || 
-          target.closest('a') || 
-          target.closest('button') ||
-          target.classList.contains('projects-card') ||
-          target.classList.contains('btn-primary') ||
-          target.classList.contains('btn-secondary')) {
+    const handleOut = (e) => {
+      const t = e.target;
+      if (t.closest('a, button, .projects-card, .btn-primary, .btn-secondary')) {
         setIsHovering(false);
       }
     };
 
-    window.addEventListener('mousemove', updatePosition, { passive: true });
-    window.addEventListener('mousedown', handleMouseDown);
-    window.addEventListener('mouseup', handleMouseUp);
-    document.addEventListener('mouseover', handleMouseOver);
-    document.addEventListener('mouseout', handleMouseOut);
-    
-    rafRef.current = requestAnimationFrame(animate);
+    window.addEventListener('mousemove', handleMove, { passive: true });
+    window.addEventListener('mousedown', handleDown);
+    window.addEventListener('mouseup', handleUp);
+    document.addEventListener('mouseover', handleOver);
+    document.addEventListener('mouseout', handleOut);
+
+    rafId = requestAnimationFrame(animate);
 
     return () => {
-      window.removeEventListener('mousemove', updatePosition);
-      window.removeEventListener('mousedown', handleMouseDown);
-      window.removeEventListener('mouseup', handleMouseUp);
-      document.removeEventListener('mouseover', handleMouseOver);
-      document.removeEventListener('mouseout', handleMouseOut);
-      cancelAnimationFrame(rafRef.current);
+      isActive = false;
+      cancelAnimationFrame(rafId);
+      window.removeEventListener('mousemove', handleMove);
+      window.removeEventListener('mousedown', handleDown);
+      window.removeEventListener('mouseup', handleUp);
+      document.removeEventListener('mouseover', handleOver);
+      document.removeEventListener('mouseout', handleOut);
     };
   }, []);
 
-  // Don't show on touch devices
   if (typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches) {
     return null;
   }
 
   return (
     <>
-      <div 
-        className={`cursor-dot ${isClicking ? 'clicking' : ''}`}
-        style={{
-          left: position.x,
-          top: position.y,
-        }}
-      />
-      <div 
-        className={`cursor-ring ${isHovering ? 'hovering' : ''} ${isClicking ? 'clicking' : ''}`}
-        style={{
-          left: position.x,
-          top: position.y,
-        }}
-      />
+      <div className={`cursor-dot ${isClicking ? 'clicking' : ''}`}
+        style={{ left: dotPos.x, top: dotPos.y }} />
+      <div className={`cursor-ring ${isHovering ? 'hovering' : ''} ${isClicking ? 'clicking' : ''}`}
+        style={{ left: ringPos.x, top: ringPos.y }} />
     </>
   );
 };

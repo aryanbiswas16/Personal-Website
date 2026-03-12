@@ -21,8 +21,8 @@ function App() {
       <Header />
       <div id="content">
         <Intro />
-        <TypewriterHero />
         <About />
+        <TypewriterHero />
         <Experience />
         <Showcase />
       </div>
