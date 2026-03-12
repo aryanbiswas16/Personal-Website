@@ -1,38 +1,76 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import '../styles/CustomCursor.css';
 
 const CustomCursor = () => {
+  const cursorRef = useRef({ x: 0, y: 0 });
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
   const [isClicking, setIsClicking] = useState(false);
+  const rafRef = useRef();
 
   useEffect(() => {
+    // Check for touch device
+    if (window.matchMedia('(pointer: coarse)').matches) {
+      return;
+    }
+
+    let targetX = 0;
+    let targetY = 0;
+
     const updatePosition = (e) => {
-      setPosition({ x: e.clientX, y: e.clientY });
+      targetX = e.clientX;
+      targetY = e.clientY;
+    };
+
+    const animate = () => {
+      // Smooth lerp for the ring
+      cursorRef.current.x += (targetX - cursorRef.current.x) * 0.15;
+      cursorRef.current.y += (targetY - cursorRef.current.y) * 0.15;
+      
+      setPosition({
+        x: cursorRef.current.x,
+        y: cursorRef.current.y
+      });
+      
+      rafRef.current = requestAnimationFrame(animate);
     };
 
     const handleMouseDown = () => setIsClicking(true);
     const handleMouseUp = () => setIsClicking(false);
 
     const handleMouseOver = (e) => {
-      if (e.target.tagName === 'A' || 
-          e.target.tagName === 'BUTTON' || 
-          e.target.closest('a') || 
-          e.target.closest('button') ||
-          e.target.classList.contains('projects-card')) {
+      const target = e.target;
+      if (target.tagName === 'A' || 
+          target.tagName === 'BUTTON' || 
+          target.closest('a') || 
+          target.closest('button') ||
+          target.classList.contains('projects-card') ||
+          target.classList.contains('btn-primary') ||
+          target.classList.contains('btn-secondary')) {
         setIsHovering(true);
       }
     };
 
-    const handleMouseOut = () => {
-      setIsHovering(false);
+    const handleMouseOut = (e) => {
+      const target = e.target;
+      if (target.tagName === 'A' || 
+          target.tagName === 'BUTTON' || 
+          target.closest('a') || 
+          target.closest('button') ||
+          target.classList.contains('projects-card') ||
+          target.classList.contains('btn-primary') ||
+          target.classList.contains('btn-secondary')) {
+        setIsHovering(false);
+      }
     };
 
-    window.addEventListener('mousemove', updatePosition);
+    window.addEventListener('mousemove', updatePosition, { passive: true });
     window.addEventListener('mousedown', handleMouseDown);
     window.addEventListener('mouseup', handleMouseUp);
     document.addEventListener('mouseover', handleMouseOver);
     document.addEventListener('mouseout', handleMouseOut);
+    
+    rafRef.current = requestAnimationFrame(animate);
 
     return () => {
       window.removeEventListener('mousemove', updatePosition);
@@ -40,6 +78,7 @@ const CustomCursor = () => {
       window.removeEventListener('mouseup', handleMouseUp);
       document.removeEventListener('mouseover', handleMouseOver);
       document.removeEventListener('mouseout', handleMouseOut);
+      cancelAnimationFrame(rafRef.current);
     };
   }, []);
 

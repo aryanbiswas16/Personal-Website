@@ -8,6 +8,7 @@ import Showcase from './components/Showcase.jsx';
 import VantaBackground from './components/VantaBackground.jsx';
 import LoadingScreen from './components/LoadingScreen.jsx';
 import CustomCursor from './components/CustomCursor.jsx';
+import TypewriterHero from './components/TypewriterHero.jsx';
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -20,6 +21,7 @@ function App() {
       <Header />
       <div id="content">
         <Intro />
+        <TypewriterHero />
         <About />
         <Experience />
         <Showcase />

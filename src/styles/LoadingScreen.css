@@ -4,7 +4,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: #0a0a0f;
+  background: #0a192f;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -24,22 +24,22 @@
 .terminal {
   width: 90%;
   max-width: 600px;
-  background: #1a1a2e;
+  background: #112240;
   border-radius: 12px;
   box-shadow: 
     0 25px 50px -12px rgba(0, 0, 0, 0.5),
-    0 0 0 1px rgba(255, 255, 255, 0.1);
+    0 0 0 1px rgba(64, 224, 208, 0.2);
   overflow: hidden;
   font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
 }
 
 .terminal-header {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(64, 224, 208, 0.1);
   padding: 12px 16px;
   display: flex;
   align-items: center;
   gap: 12px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(64, 224, 208, 0.2);
 }
 
 .terminal-buttons {
@@ -55,12 +55,12 @@
 
 .btn-close { background: #ff5f56; }
 .btn-minimize { background: #ffbd2e; }
-.btn-maximize { background: #27c93f; }
+.btn-maximize { background: #40E0D0; }
 
 .terminal-title {
   flex: 1;
   text-align: center;
-  color: rgba(255, 255, 255, 0.6);
+  color: #40E0D0;
   font-size: 0.85rem;
 }
 
@@ -78,21 +78,22 @@
 }
 
 .terminal-prompt {
-  color: #27c93f;
+  color: #40E0D0;
   font-weight: bold;
 }
 
 .terminal-text {
-  color: #fff;
+  color: #CCD6F6;
 }
 
 .terminal-line:nth-child(3) .terminal-text,
 .terminal-line:nth-child(4) .terminal-text {
-  color: #67d4ff;
+  color: #40E0D0;
+  text-shadow: 0 0 10px rgba(64, 224, 208, 0.3);
 }
 
 .cursor {
-  color: #27c93f;
+  color: #40E0D0;
   animation: blink 1s step-end infinite;
 }
 
@@ -108,7 +109,7 @@
   width: 90%;
   max-width: 600px;
   height: 4px;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(64, 224, 208, 0.1);
   border-radius: 2px;
   margin-top: 32px;
   overflow: hidden;
@@ -116,10 +117,11 @@
 
 .loading-progress {
   height: 100%;
-  background: linear-gradient(90deg, #667eea, #764ba2, #f093fb);
+  background: linear-gradient(90deg, #40E0D0, #64ffda);
   border-radius: 2px;
   animation: progress 3s ease-out forwards;
   width: 0%;
+  box-shadow: 0 0 10px rgba(64, 224, 208, 0.5);
 }
 
 @keyframes progress {
