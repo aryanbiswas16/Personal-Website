@@ -36,57 +36,67 @@
     cursor: default;
     display: flex;
     flex-direction: column;
-    position: relative;
+    justify-content: space-between;
     height: 100%;
-    padding: 2rem 1.75rem;
-    background: rgba(26, 26, 46, 0.4);
+    min-height: 320px;
+    padding: 1.75rem;
+    background: rgba(17, 34, 64, 0.6);
     backdrop-filter: blur(10px);
     border-radius: 16px;
-    border: 1px solid rgba(64, 224, 208, 0.1);
-    box-shadow: 0 8px 32px 0 rgba(64, 224, 208, 0.1);
+    border: 1px solid rgba(64, 224, 208, 0.15);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     overflow: hidden;
 }
 
 .projects-card:hover {
-    transform: translateY(-10px) rotateX(5deg);
-    background: rgba(26, 26, 46, 0.6);
-    box-shadow: 0 15px 45px rgba(64, 224, 208, 0.2);
+    transform: translateY(-10px);
+    background: rgba(17, 34, 64, 0.8);
+    box-shadow: 0 20px 50px rgba(64, 224, 208, 0.15);
+    border-color: rgba(64, 224, 208, 0.3);
+}
+
+/* Card Structure */
+.card-top {
+    flex: 1;
+}
+
+.card-bottom {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(64, 224, 208, 0.1);
 }
 
 /* Featured Card Styling */
 .featured-card {
-    background: linear-gradient(135deg, rgba(26, 26, 46, 0.6) 0%, rgba(64, 224, 208, 0.1) 100%);
-    border: 1px solid rgba(64, 224, 208, 0.3);
-    box-shadow: 0 8px 32px 0 rgba(64, 224, 208, 0.2);
+    background: linear-gradient(135deg, rgba(17, 34, 64, 0.7) 0%, rgba(64, 224, 208, 0.08) 100%);
+    border: 1px solid rgba(64, 224, 208, 0.25);
 }
 
 .featured-card:hover {
-    box-shadow: 0 20px 60px rgba(64, 224, 208, 0.3);
-    border-color: rgba(64, 224, 208, 0.5);
+    box-shadow: 0 20px 50px rgba(64, 224, 208, 0.2);
+    border-color: rgba(64, 224, 208, 0.4);
 }
 
 .featured-badge-card {
-    position: absolute;
-    top: 12px;
-    right: 12px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
+    display: inline-block;
+    background: linear-gradient(135deg, #40E0D0 0%, #64ffda 100%);
+    color: #0a192f;
     padding: 4px 12px;
     border-radius: 20px;
     font-size: 0.7rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    margin-bottom: 1rem;
+    box-shadow: 0 4px 15px rgba(64, 224, 208, 0.3);
 }
 
 .highlight-text {
     font-size: 0.85rem;
     color: #40E0D0;
-    margin-bottom: 12px;
+    margin-bottom: 0.75rem;
     font-weight: 600;
-    text-shadow: 0 0 10px rgba(64, 224, 208, 0.3);
 }
 
 /* Tech Tags */
@@ -94,32 +104,29 @@
     font-family: "NTR", sans-serif;
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
-    margin-top: auto;
+    gap: 6px;
 }
 
 .tech-tag {
-    background: rgba(64, 224, 208, 0.1);
-    border: 1px solid rgba(64, 224, 208, 0.2);
-    color: #40E0D0;
-    padding: 4px 10px;
-    border-radius: 6px;
-    font-size: 0.8rem;
+    background: rgba(64, 224, 208, 0.08);
+    border: 1px solid rgba(64, 224, 208, 0.15);
+    color: #64ffda;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
     transition: all 0.3s ease;
 }
 
 .tech-tag:hover {
-    background: rgba(64, 224, 208, 0.2);
-    transform: translateY(-2px);
+    background: rgba(64, 224, 208, 0.15);
+    border-color: rgba(64, 224, 208, 0.3);
 }
 
 .card-header {
-    margin-top: -20px;
     display: flex;
-    padding: 1.25em 0 !important;
-    flex-direction: row;
     justify-content: space-between;
-    border-bottom: none !important;
+    align-items: flex-start;
+    margin-bottom: 1rem;
 }
 
 .folder-icon {
@@ -153,18 +160,17 @@
 
 .card-title {
     font-family: "NTR", sans-serif;
-    color: var(--lightest-slate);
-    font-size: 24px;
-    font-weight: bold;
-    margin: 10px 0;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    color: #CCD6F6;
+    font-size: 1.35rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    line-height: 1.3;
 }
 
 .card-desc {
     font-family: "NTR", sans-serif;
-    color: var(--slate);
-    font-size: 18px;
-    padding-bottom: 40px;
+    color: #8892B0;
+    font-size: 0.95rem;
     line-height: 1.6;
 }
 

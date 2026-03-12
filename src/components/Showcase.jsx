@@ -142,44 +142,49 @@ const Showcase = () => {
       >
         <ul className="projects-grid">
           {Object.keys(projects).map((key, i) => (
-            <motion.li 
-              className={`projects-card ${projects[key]["featured"] ? 'featured-card' : ''}`} 
+            <motion.li
+              className={`projects-card ${projects[key]["featured"] ? 'featured-card' : ''}`}
               key={i}
               variants={cardVariants}
-              whileHover={{ 
+              whileHover={{
                 y: -10,
                 transition: { duration: 0.2 }
               }}
             >
-              {projects[key]["featured"] && (
-                <div className="featured-badge-card">★ Featured</div>
-              )}
-              {projects[key]["highlight"] && (
-                <div className="highlight-text">{projects[key]["highlight"]}</div>
-              )}
-              <div className="card-header">
-                <motion.div 
-                  className="folder-icon"
-                  whileHover={{ 
-                    rotate: 15,
-                    scale: 1.1,
-                    transition: { duration: 0.2 }
-                  }}
-                >
-                  <FolderOpenRounded style={{ fontSize: 35 }} />
-                </motion.div>
-                <ExternalLinks
-                  githubLink={projects[key]["link"]}
-                  openLink={projects[key]["open"]}
-                />
+              <div className="card-top">
+                {projects[key]["featured"] && (
+                  <div className="featured-badge-card">★ Featured</div>
+                )}
+                <div className="card-header">
+                  <motion.div
+                    className="folder-icon"
+                    whileHover={{
+                      rotate: 15,
+                      scale: 1.1,
+                      transition: { duration: 0.2 }
+                    }}
+                  >
+                    <FolderOpenRounded style={{ fontSize: 35 }} />
+                  </motion.div>
+                  <ExternalLinks
+                    githubLink={projects[key]["link"]}
+                    openLink={projects[key]["open"]}
+                  />
+                </div>
+
+                <div className="card-title">{key}</div>
+                {projects[key]["highlight"] && (
+                  <div className="highlight-text">{projects[key]["highlight"]}</div>
+                )}
+                <div className="card-desc">{projects[key]["desc"]}</div>
               </div>
 
-              <div className="card-title">{key}</div>
-              <div className="card-desc">{projects[key]["desc"]}</div>
-              <div className="card-tech">
-                {projects[key]["techStack"].split(", ").map((tech, idx) => (
-                  <span key={idx} className="tech-tag">{tech}</span>
-                ))}
+              <div className="card-bottom">
+                <div className="card-tech">
+                  {projects[key]["techStack"].split(", ").map((tech, idx) => (
+                    <span key={idx} className="tech-tag">{tech}</span>
+                  ))}
+                </div>
               </div>
             </motion.li>
           ))}
