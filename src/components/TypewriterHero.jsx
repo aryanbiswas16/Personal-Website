@@ -14,8 +14,7 @@ const TypewriterHero = () => {
     'Full Stack Developer',
     'Pro Gamer',
     'Chef in Training',
-    'Dog Dad',
-    'Coffee Enthusiast'
+    'Energy Drink Enthusiast'
   ];
   
   const period = 2000;
