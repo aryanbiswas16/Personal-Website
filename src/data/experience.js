@@ -1,0 +1,58 @@
+// Wrap a phrase in **double asterisks** to emphasize it.
+export const experience = [
+  {
+    company: 'QMind',
+    companyUrl: 'https://qmind.ca/',
+    role: 'AI Research Project Lead',
+    note: 'DeepfakeGuard · Queen’s University AI club',
+    start: 'May 2025',
+    end: 'Apr 2026',
+    location: 'Kingston',
+    bullets: [
+      'Led a **five-person team** building **DeepfakeGuard**, an open-source multimodal deepfake-detection toolkit in Python, PyTorch, and Streamlit. First-authored the **CUCAI 2026 proceedings paper**, selected for a spotlight presentation.',
+      'Fine-tuned a **DINOv3 Vision Transformer** with parameter-efficient LayerNorm and final-block tuning: **0.880 AUROC** on Celeb-DF v2 when trained only on FaceForensics++, **0.227 AUROC** ahead of Xception-c23.',
+      'Designed the **multimodal fusion** that combines the DINOv3 visual, LipFD audio-visual, and D3 temporal detectors with trust-weighted scoring and applicability gating.',
+      'Built a **VLM forensic-reasoning module** with interchangeable GPT-4o mini, Claude, and Qwen2-VL backends that explains a verdict from sampled frames, ensemble scores, and detector diagnostics.',
+    ],
+  },
+  {
+    company: 'BMO',
+    companyUrl: 'https://www.bmo.com/',
+    role: 'AI Engineer',
+    note: 'Via TCS Pace Port',
+    start: 'Oct 2024',
+    end: 'Aug 2025',
+    location: 'Toronto',
+    bullets: [
+      'Took an internship proof-of-concept to production as a **generative-AI design-to-code platform**: an **MCP server** wired into GitHub Copilot that turns Figma designs into Angular components, pages, and interactions for **100+ internal users**.',
+      'Automated ALM test-case drafting with **LLM agents** and tool-augmented workflows, cutting manual QA effort by **40%** across enterprise testing pipelines.',
+      'Built an **LLM-powered TypeScript refactoring system** that safely migrates legacy AngularJS codebases to Angular on live production sites.',
+    ],
+  },
+  {
+    company: 'TCS Pace Port',
+    companyUrl: 'https://www.tcs.com/',
+    role: 'AI Research Intern',
+    start: 'May 2024',
+    end: 'Oct 2024',
+    location: 'Toronto',
+    bullets: [
+      'Designed an **XGBoost churn-risk model** for BMO business-banking customers, producing segments for targeted retention.',
+      'Delivered an **OCR and machine-translation pipeline** for RBC that processed **1,000+ enterprise documents** in production while preserving the source formatting.',
+      'Built a **resume-screening system** on vector embeddings and cosine-similarity retrieval, cutting screening time by **75%**.',
+      'Led a **ROS 2 autonomous wheelchair** prototype with A* and RRT* path planning and YOLO obstacle detection.',
+    ],
+  },
+  {
+    company: 'Queen’s University',
+    companyUrl: 'https://www.queensu.ca/',
+    role: 'Undergraduate Teaching Assistant',
+    start: 'Sept 2022',
+    end: 'Apr 2023',
+    location: 'Kingston',
+    bullets: [
+      'Mentored **100+ students** in CISC 101 and CISC 121 through tutorials, office hours, and exams.',
+      'Built an **autograder** that cut instructor grading time by **36%**.',
+    ],
+  },
+]

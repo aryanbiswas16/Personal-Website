@@ -1,0 +1,234 @@
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  height: var(--nav-h);
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid transparent;
+  transition:
+    background-color 0.3s var(--ease),
+    border-color 0.3s var(--ease);
+}
+
+.scrolled {
+  background: color-mix(in srgb, var(--bg) 80%, transparent);
+  -webkit-backdrop-filter: blur(14px) saturate(1.3);
+  backdrop-filter: blur(14px) saturate(1.3);
+  border-bottom-color: var(--line);
+}
+
+.progress {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 1px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  pointer-events: none;
+}
+
+.inner {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.brand {
+  font-family: var(--font-display);
+  font-size: 1.45rem;
+  letter-spacing: -0.01em;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.brand em {
+  color: var(--accent);
+}
+
+.links {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 2px;
+}
+
+.links a {
+  position: relative;
+  padding: 8px 12px;
+  font-size: 0.9rem;
+  color: var(--ink-2);
+  transition: color 0.2s;
+}
+
+.links a::after {
+  content: '';
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 3px;
+  height: 1px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s var(--ease-out);
+}
+
+.links a:hover,
+.links a.active {
+  color: var(--ink);
+}
+
+.links a.active::after {
+  transform: scaleX(1);
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.clock {
+  padding-right: 8px;
+  white-space: nowrap;
+}
+
+.resume {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 8px 10px;
+  margin-right: 2px;
+  font-size: 0.9rem;
+  color: var(--ink-2);
+  transition: color 0.2s;
+}
+
+.resume:hover {
+  color: var(--ink);
+}
+
+.iconBtn {
+  width: 38px;
+  height: 38px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  color: var(--ink-2);
+  border: 1px solid transparent;
+  transition:
+    color 0.2s,
+    border-color 0.2s,
+    background-color 0.2s,
+    transform 0.2s var(--ease);
+}
+
+.iconBtn:hover {
+  color: var(--ink);
+  border-color: var(--line);
+  background: var(--bg-elev);
+}
+
+.iconBtn:active {
+  transform: scale(0.94);
+}
+
+.menuBtn {
+  display: none;
+}
+
+/* Full-screen menu (small screens) */
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  padding: calc(var(--nav-h) + 24px) var(--gutter) 36px;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.3s var(--ease),
+    visibility 0.3s;
+}
+
+.overlayOpen {
+  opacity: 1;
+  visibility: visible;
+}
+
+.overlayLinks {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--line);
+}
+
+.overlayLinks a {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--line);
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 10vw, 4rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  transform: translateY(10px);
+  opacity: 0;
+  transition:
+    transform 0.5s var(--ease-out),
+    opacity 0.5s var(--ease-out);
+}
+
+.overlayOpen .overlayLinks a {
+  transform: none;
+  opacity: 1;
+}
+
+.overlayOpen .overlayLinks a:nth-child(2) {
+  transition-delay: 60ms;
+}
+.overlayOpen .overlayLinks a:nth-child(3) {
+  transition-delay: 120ms;
+}
+.overlayOpen .overlayLinks a:nth-child(4) {
+  transition-delay: 180ms;
+}
+
+.overlayFoot {
+  margin-top: auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.overlayFoot a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-size: 0.9rem;
+}
+
+@media (max-width: 880px) {
+  .links,
+  .clock,
+  .resume {
+    display: none;
+  }
+
+  .menuBtn {
+    display: grid;
+  }
+}

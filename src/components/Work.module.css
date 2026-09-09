@@ -1,0 +1,230 @@
+.section {
+  padding-top: clamp(80px, 12vh, 150px);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: clamp(48px, 7vh, 80px) 32px;
+}
+
+.item {
+  grid-column: span 6;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.feature {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 32px;
+  align-items: center;
+}
+
+.feature .figure {
+  grid-column: 1 / span 7;
+}
+
+.feature .meta {
+  grid-column: 9 / span 4;
+}
+
+/* Alternate feature: figure on the right, words on the left */
+.featureFlip .figure {
+  grid-column: 6 / span 7;
+}
+
+.featureFlip .meta {
+  grid-column: 1 / span 4;
+  grid-row: 1;
+}
+
+.figure {
+  position: relative;
+  display: block;
+  aspect-ratio: 16 / 10;
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: var(--bg-sunk);
+  box-shadow: var(--shadow-sm);
+  transition:
+    box-shadow 0.4s var(--ease),
+    transform 0.4s var(--ease);
+}
+
+.figure:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-3px);
+}
+
+.figure.contain {
+  background: #000;
+}
+
+/* Taller than the frame so the parallax drift never shows an edge */
+.figure img {
+  position: absolute;
+  top: -8%;
+  left: 0;
+  width: 100%;
+  height: 116%;
+  object-fit: cover;
+}
+
+.figure svg {
+  width: 100%;
+  height: 100%;
+}
+
+.kind {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  color: var(--ink);
+  background: color-mix(in srgb, var(--bg) 82%, transparent);
+  border: 1px solid var(--line);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+}
+
+.meta {
+  display: flex;
+  flex-direction: column;
+}
+
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 12px;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: clamp(1.7rem, 2.5vw, 2.3rem);
+  line-height: 1.05;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+  margin-bottom: 14px;
+}
+
+.feature .title {
+  font-size: clamp(2rem, 3.3vw, 3.1rem);
+}
+
+.title a {
+  transition: color 0.2s;
+}
+
+.title a:hover {
+  color: var(--accent);
+}
+
+.desc {
+  color: var(--ink-2);
+  max-width: 54ch;
+  text-wrap: pretty;
+  margin-bottom: 18px;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 20px;
+}
+
+.tags li {
+  padding: 4px 10px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--ink-2);
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+}
+
+.links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.92rem;
+  font-weight: 500;
+}
+
+@media (max-width: 880px) {
+  .feature .figure,
+  .feature .meta,
+  .item {
+    grid-column: 1 / -1;
+  }
+
+  .featureFlip .meta {
+    grid-row: auto;
+  }
+
+  .feature {
+    gap: 22px;
+  }
+}
+
+/* Smaller projects, listed under the grid */
+.more {
+  margin-top: clamp(56px, 8vh, 96px);
+}
+
+.moreLabel {
+  margin-bottom: 14px;
+}
+
+.moreList {
+  border-top: 1px solid var(--line);
+}
+
+.moreItem {
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr) auto;
+  gap: 8px 24px;
+  align-items: baseline;
+  padding: 22px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.moreTitle {
+  font-family: var(--font-display);
+  font-size: 1.45rem;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  margin-bottom: 6px;
+}
+
+.moreDesc {
+  color: var(--ink-2);
+  font-size: 0.98rem;
+  max-width: 66ch;
+  text-wrap: pretty;
+}
+
+.moreWhere {
+  white-space: nowrap;
+}
+
+@media (max-width: 720px) {
+  .moreItem {
+    grid-template-columns: 40px minmax(0, 1fr);
+    gap: 6px 16px;
+  }
+
+  .moreWhere {
+    grid-column: 2;
+    white-space: normal;
+  }
+}

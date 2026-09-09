@@ -1,0 +1,104 @@
+.section {
+  padding-top: clamp(80px, 12vh, 150px);
+}
+
+.list {
+  border-top: 1px solid var(--line);
+}
+
+.row {
+  position: relative;
+  display: grid;
+  grid-template-columns: 190px minmax(0, 1fr) minmax(0, 1.55fr);
+  gap: 20px 40px;
+  padding: 36px 0;
+}
+
+.line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: var(--line);
+  transform-origin: left;
+}
+
+.when {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-top: 5px;
+}
+
+.date,
+.loc {
+  transition: color 0.35s var(--ease);
+}
+
+.when.active .date {
+  color: var(--accent);
+}
+
+.when.active .loc {
+  color: var(--ink);
+}
+
+.loc {
+  color: var(--muted);
+}
+
+.role {
+  font-family: var(--font-display);
+  font-size: 1.7rem;
+  line-height: 1.08;
+  letter-spacing: -0.01em;
+  margin-bottom: 8px;
+}
+
+.org {
+  color: var(--ink-2);
+  font-size: 0.95rem;
+}
+
+.note {
+  margin-top: 6px;
+}
+
+.what li {
+  position: relative;
+  padding-left: 24px;
+  color: var(--ink-2);
+  text-wrap: pretty;
+}
+
+.what li + li {
+  margin-top: 12px;
+}
+
+.what li::before {
+  content: '—';
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+}
+
+.what strong {
+  color: var(--ink);
+  font-weight: 500;
+}
+
+@media (max-width: 880px) {
+  .row {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    padding: 28px 0;
+  }
+
+  .when {
+    flex-direction: row;
+    align-items: baseline;
+    gap: 14px;
+    padding-top: 0;
+  }
+}

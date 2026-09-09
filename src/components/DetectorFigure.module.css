@@ -1,0 +1,106 @@
+.svg {
+  width: 100%;
+  height: 100%;
+  background:
+    radial-gradient(120% 90% at 50% 40%, #1d2126 0%, #0d0f12 70%),
+    #0d0f12;
+  font-family: var(--font-mono);
+}
+
+.frame {
+  fill: #14181d;
+  stroke: rgba(239, 234, 224, 0.22);
+  stroke-width: 1;
+}
+
+.head {
+  fill: #262c34;
+}
+
+.body {
+  fill: #20252c;
+}
+
+.box {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 1;
+  stroke-dasharray: 4 3;
+  opacity: 0.9;
+}
+
+.scan {
+  stroke: var(--accent);
+  stroke-width: 0.8;
+  opacity: 0.45;
+  transition: y1 0.6s var(--ease), y2 0.6s var(--ease);
+}
+
+.tag {
+  fill: var(--accent);
+  font-size: 7px;
+  letter-spacing: 0.04em;
+}
+
+.strip {
+  fill: #1c2127;
+  stroke: rgba(239, 234, 224, 0.18);
+  stroke-width: 0.8;
+}
+
+.stripActive {
+  fill: #2a3039;
+  stroke: var(--accent);
+  stroke-width: 1;
+}
+
+.name {
+  fill: #efeae0;
+  font-size: 7.5px;
+  letter-spacing: 0.06em;
+}
+
+.kind {
+  fill: rgba(239, 234, 224, 0.5);
+  font-size: 6.5px;
+  letter-spacing: 0.04em;
+}
+
+.score {
+  fill: #efeae0;
+  font-size: 7.5px;
+  font-variant-numeric: tabular-nums;
+}
+
+.track {
+  fill: rgba(239, 234, 224, 0.14);
+}
+
+.fill {
+  fill: var(--accent);
+  opacity: 0.85;
+  transition: width 0.7s var(--ease);
+}
+
+.fillStrong {
+  fill: var(--accent);
+  transition: width 0.7s var(--ease);
+}
+
+.rule {
+  stroke: rgba(239, 234, 224, 0.18);
+  stroke-width: 1;
+}
+
+.verdict {
+  fill: var(--accent);
+  font-size: 8.5px;
+  letter-spacing: 0.06em;
+  font-variant-numeric: tabular-nums;
+}
+
+.meta {
+  fill: rgba(239, 234, 224, 0.5);
+  font-size: 7.5px;
+  letter-spacing: 0.06em;
+}

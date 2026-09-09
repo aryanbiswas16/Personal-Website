@@ -1,33 +1,30 @@
-import './App.css';
-import { useState } from 'react';
-import Header from './components/Header.jsx';
-import Intro from './components/Intro.jsx';
-import About from './components/about.jsx';
-import Experience from './components/experience.jsx';
-import Showcase from './components/Showcase.jsx';
-import VantaBackground from './components/VantaBackground.jsx';
-import LoadingScreen from './components/LoadingScreen.jsx';
-import CustomCursor from './components/CustomCursor.jsx';
-import TypewriterHero from './components/TypewriterHero.jsx';
+import { useEffect } from 'react'
+import { initScroll } from './lib/scroll.js'
+import Grain from './components/Grain.jsx'
+import Nav from './components/Nav.jsx'
+import Hero from './components/Hero.jsx'
+import Work from './components/Work.jsx'
+import Experience from './components/Experience.jsx'
+import About from './components/About.jsx'
+import Footer from './components/Footer.jsx'
 
-function App() {
-  const [loading, setLoading] = useState(true);
+export default function App() {
+  useEffect(() => initScroll(), [])
 
   return (
-    <div className="App">
-      {loading && <LoadingScreen onComplete={() => setLoading(false)} />}
-      <CustomCursor />
-      <VantaBackground />
-      <Header />
-      <div id="content">
-        <Intro />
-        <About />
-        <TypewriterHero />
+    <>
+      <a className="skip" href="#main">
+        Skip to content
+      </a>
+      <Grain />
+      <Nav />
+      <main id="main">
+        <Hero />
+        <Work />
         <Experience />
-        <Showcase />
-      </div>
-    </div>
-  );
+        <About />
+      </main>
+      <Footer />
+    </>
+  )
 }
-
-export default App;
