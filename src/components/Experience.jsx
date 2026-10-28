@@ -51,7 +51,7 @@ export default function Experience() {
               <span className={`mono ${s.date}`}>
                 {job.start} — {job.end}
               </span>
-              <span className={`label ${s.loc}`}>{job.location}</span>
+              {job.location && <span className={`label ${s.loc}`}>{job.location}</span>}
             </div>
 
             <div className={s.who}>
@@ -64,11 +64,13 @@ export default function Experience() {
               {job.note && <p className={`mono ${s.note}`}>{job.note}</p>}
             </div>
 
-            <ul className={s.what}>
-              {job.bullets.map((b, j) => (
-                <li key={j}>{emphasize(b)}</li>
-              ))}
-            </ul>
+            {job.bullets.length > 0 && (
+              <ul className={s.what}>
+                {job.bullets.map((b, j) => (
+                  <li key={j}>{emphasize(b)}</li>
+                ))}
+              </ul>
+            )}
 
             <span className={s.line} aria-hidden="true" />
           </Reveal>

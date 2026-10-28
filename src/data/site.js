@@ -8,8 +8,8 @@ export const site = {
   github: 'https://github.com/aryanbiswas16',
   linkedin: 'https://www.linkedin.com/in/aryan-biswas/',
   url: 'https://aryanbiswas.ca',
-  // What I'm looking for right now. Shown in the hero, About, and the footer.
-  availability: 'Open to full-time software and AI engineering roles, in Toronto or remote.',
+  // What I'm doing right now. Shown in the hero, About, and the footer.
+  availability: 'AI/ML engineer at TCS Pace Port in Toronto, full time since August 2026.',
 }
 
 // The résumé lives in public/ so the link stays stable: https://aryanbiswas.ca/Aryan-Biswas-Resume.pdf

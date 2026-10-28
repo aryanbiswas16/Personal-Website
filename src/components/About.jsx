@@ -123,10 +123,10 @@ export default function About() {
               about monsters in an office.
             </p>
             <p>
-              I’m looking for a full-time role where I can keep doing this, in AI engineering or
-              software development, in Toronto or remote. If that sounds like your team,{' '}
+              Since August 2026 I’ve been back at TCS Pace Port full time as an AI/ML engineer,
+              doing more of the same. If you’re building something interesting,{' '}
               <a className="link" href={`mailto:${site.email}`}>
-                I’d like to hear from you
+                I’d like to hear about it
               </a>
               .
             </p>

@@ -1,0 +1,122 @@
+.svg {
+  width: 100%;
+  height: 100%;
+  background: #0b0c0f;
+  font-family: var(--font-sans);
+}
+
+.glow {
+  fill: var(--accent);
+  opacity: 0.35;
+}
+
+.bezel {
+  fill: #050506;
+  stroke: rgba(255, 255, 255, 0.16);
+  stroke-width: 1;
+}
+
+.island {
+  fill: #050506;
+}
+
+.date {
+  fill: rgba(255, 255, 255, 0.78);
+  font-size: 6.2px;
+  font-weight: 500;
+}
+
+.time {
+  fill: rgba(255, 255, 255, 0.94);
+  font-size: 26px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.card {
+  opacity: 0;
+  transform: translateY(-8px);
+  transition:
+    opacity 0.5s ease,
+    transform 0.5s ease;
+  transition-delay: calc(var(--i) * 280ms + 250ms);
+}
+
+/* The alerts land one after another once the card scrolls into view (Reveal sets data-shown). */
+[data-shown='true'] .card {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+.glass {
+  fill: rgba(255, 255, 255, 0.2);
+  stroke: rgba(255, 255, 255, 0.18);
+  stroke-width: 0.5;
+}
+
+.icon {
+  stroke: rgba(255, 255, 255, 0.35);
+  stroke-width: 0.4;
+}
+
+.new {
+  fill: #3fae74;
+}
+
+.drop {
+  fill: var(--accent);
+}
+
+.pre {
+  fill: #5b7fe0;
+}
+
+.app {
+  fill: rgba(255, 255, 255, 0.6);
+  font-size: 3.8px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+}
+
+.now {
+  fill: rgba(255, 255, 255, 0.55);
+  font-size: 4px;
+}
+
+.title {
+  fill: #fff;
+  font-size: 5.4px;
+  font-weight: 600;
+}
+
+.product {
+  fill: rgba(255, 255, 255, 0.9);
+  font-size: 5px;
+}
+
+.detail {
+  fill: rgba(255, 255, 255, 0.68);
+  font-family: var(--font-mono);
+  font-size: 4.2px;
+}
+
+.side {
+  fill: rgba(239, 234, 224, 0.82);
+  font-family: var(--font-mono);
+  font-size: 6.4px;
+  letter-spacing: 0.12em;
+}
+
+.sideSub {
+  fill: rgba(239, 234, 224, 0.42);
+  font-family: var(--font-mono);
+  font-size: 5.2px;
+}

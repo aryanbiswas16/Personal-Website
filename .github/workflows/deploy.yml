@@ -34,6 +34,8 @@ jobs:
         run: npm run build
         env:
           VITE_BASE: '/'
+          # Public Mapbox token for the Motive map, restricted to the site's URLs in Mapbox.
+          VITE_MAPBOX_TOKEN: ${{ secrets.VITE_MAPBOX_TOKEN }}
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

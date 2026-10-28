@@ -1,6 +1,20 @@
 // Wrap a phrase in **double asterisks** to emphasize it.
 export const experience = [
   {
+    company: 'TCS Pace Port',
+    companyUrl: 'https://www.tcs.com/',
+    role: 'AI/ML Engineer',
+    note: 'Full-time',
+    start: 'Aug 2026',
+    end: 'Present',
+    location: 'Toronto',
+    bullets: [
+      'Building **computer vision for one of the world’s largest mining companies**: models that read the froth on flotation cells from camera images.',
+      'Built a froth-quality model: **fine-tuned Cellpose-SAM** and **watershed** segmentation to measure bubbles, and **gradient boosting** to rate each cell OK, CHECK, or POOR.',
+      'Built a **U-Net** to test whether **thermal cameras** can see froth bubbles, trained on simulated and synthetic thermal images.',
+    ],
+  },
+  {
     company: 'QMind',
     companyUrl: 'https://qmind.ca/',
     role: 'AI Research Project Lead',
@@ -13,6 +27,17 @@ export const experience = [
       'Fine-tuned a **DINOv3 Vision Transformer** with parameter-efficient LayerNorm and final-block tuning: **0.880 AUROC** on Celeb-DF v2 when trained only on FaceForensics++, **0.227 AUROC** ahead of Xception-c23.',
       'Designed the **multimodal fusion** that combines the DINOv3 visual, LipFD audio-visual, and D3 temporal detectors with trust-weighted scoring and applicability gating.',
       'Built a **VLM forensic-reasoning module** with interchangeable GPT-4o mini, Claude, and Qwen2-VL backends that explains a verdict from sampled frames, ensemble scores, and detector diagnostics.',
+    ],
+  },
+  {
+    company: 'MUSE Magazine',
+    companyUrl: 'https://muse-magazine.com/',
+    role: 'Full-Stack Web Developer',
+    start: 'May 2025',
+    end: 'Apr 2026',
+    bullets: [
+      'Developed and maintained **muse-magazine.com**, the magazine’s website for its articles, issues, and team.',
+      'Helped create **several issues** of the magazine.',
     ],
   },
   {

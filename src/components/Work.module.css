@@ -79,6 +79,20 @@
   height: 100%;
 }
 
+.figure video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* Frames without a link (private client work) don't lift on hover */
+div.figure:hover {
+  box-shadow: var(--shadow-sm);
+  transform: none;
+}
+
 .kind {
   position: absolute;
   top: 12px;
@@ -130,6 +144,12 @@
   max-width: 54ch;
   text-wrap: pretty;
   margin-bottom: 18px;
+}
+
+.credit {
+  color: var(--muted);
+  font-size: 0.78rem;
+  margin: -6px 0 18px;
 }
 
 .tags {

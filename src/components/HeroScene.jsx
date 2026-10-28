@@ -6,39 +6,56 @@ import SceneFog from './SceneFog.jsx'
 
 /**
  * A field of small "parts" that fills the whole hero. Loose, they drift across the viewport and
- * get nudged away from the cursor. As `progressRef` goes 0 → 1 they sort themselves into a torus
- * knot framed to the right of the headline (above it on narrow screens).
+ * get nudged away from the cursor. As `progressRef` goes 0 → 1 they assemble into a cube mosaic of
+ * my avatar (src/data/portrait.js), framed to the right of the headline (above it on narrow
+ * screens), and take on its colours as they land.
  */
 
 const CAMERA_Z = 7.6
 const dummy = new THREE.Object3D()
 const v = new THREE.Vector3()
-const knotRot = new THREE.Matrix4()
+const frameRot = new THREE.Matrix4()
 const euler = new THREE.Euler()
+const tmp = new THREE.Color()
 
-// The knot's bounding radius at scale 1, including its tilt (TorusKnotGeometry reaches 1.5 × radius).
-const KNOT_R = 2.6
+// The portrait is built 5 units tall; this is its bounding radius at scale 1, with a little air.
+const PORTRAIT_H = 5
+const PORTRAIT_R = 2.7
 
-/** Where the knot sits and how big it is for this viewport, in world units on the z = 0 plane. */
-function frameKnot(viewport) {
+/** Where the portrait sits and how big it is for this viewport, in world units on the z = 0 plane. */
+function framePortrait(viewport) {
   const W = viewport.width / 2
   const H = viewport.height / 2
   if (viewport.aspect < 1) {
-    // Portrait: the copy sits at the bottom, so the knot takes the upper quarter, under the nav.
-    const extent = Math.min(0.36 * H, 0.85 * W)
-    return { x: 0, y: 0.5 * H, scale: extent / KNOT_R, W, H }
+    // Portrait: the face sits in the band the stylesheet keeps clear above the copy, under the nav.
+    // Sized in CSS pixels to match that band (Hero.module.css, max-width: 899px).
+    const px = viewport.factor
+    const radius = Math.min(0.4 * W * 2 * px, 165)
+    return { x: 0, y: H - (72 + radius) / px, scale: radius / px / PORTRAIT_R, W, H }
   }
-  // Landscape: the copy takes the left seven columns, the knot the right, clear of the nav band.
-  const extent = Math.min(0.68 * H, 0.47 * W)
-  return { x: 0.48 * W, y: -0.08 * H, scale: Math.min(1, extent / KNOT_R), W, H }
+  // Landscape: the copy takes the left seven columns, the face the right, clear of the nav band.
+  const extent = Math.min(0.72 * H, 0.48 * W)
+  return { x: 0.48 * W, y: -0.06 * H, scale: Math.min(1.1, extent / PORTRAIT_R), W, H }
 }
 
-function Parts({ count, progressRef, pointerRef }) {
+/** Dark theme lifts the near-black hair and jacket so they still read against the page. */
+function portraitColor(r, g, b, lift) {
+  const f = (c) => lift + (1 - lift) * (c / 255)
+  return tmp.setRGB(f(r), f(g), f(b), THREE.SRGBColorSpace)
+}
+
+function luminance(hex) {
+  const c = new THREE.Color(hex)
+  return 0.2126 * c.r + 0.7152 * c.g + 0.0722 * c.b
+}
+
+function Parts({ portrait, progressRef, pointerRef }) {
   const mesh = useRef(null)
   const { viewport, gl } = useThree()
   const colors = useThemeColors()
   const smooth = useRef(0)
   const tilt = useRef({ x: 0, y: 0 })
+  const count = portrait.cells.length / 5
 
   // Let the page keep scrolling when a finger lands on the canvas.
   useEffect(() => {
@@ -47,103 +64,122 @@ function Parts({ count, progressRef, pointerRef }) {
 
   const data = useMemo(() => {
     const rand = makeRandom(20250908)
-    const geo = new THREE.TorusKnotGeometry(1.3, 0.42, 220, 28, 2, 3)
-    const pos = geo.attributes.position
-    const total = pos.count
+    const { cols, rows, cells } = portrait
+    const cell = PORTRAIT_H / rows
 
     const target = new Float32Array(count * 3)
-    const loose = new Float32Array(count * 3) // in standard deviations around the knot's spot
+    const loose = new Float32Array(count * 3) // in standard deviations around the portrait's spot
     const delay = new Float32Array(count)
     const size = new Float32Array(count)
     const spin = new Float32Array(count * 3)
     const seed = new Float32Array(count)
-    const accent = new Uint8Array(count)
 
     for (let i = 0; i < count; i++) {
       const i3 = i * 3
-      const vi = Math.floor(rand() * total)
-      target[i3] = pos.getX(vi)
-      target[i3 + 1] = pos.getY(vi)
-      target[i3 + 2] = pos.getZ(vi)
+      const c = cells[i * 5]
+      const r = cells[i * 5 + 1]
 
-      // Loose, the parts form a soft cloud around the spot where the knot will be, so the mess
-      // already hints at where things end up and thins out toward the copy.
+      // A shallow dome centred on the face, so the mosaic has some depth when it tilts.
+      const u = c / cols - 0.5
+      const w = r / rows - 0.38
+      target[i3] = (c - cols / 2 + 0.5) * cell
+      target[i3 + 1] = (rows / 2 - r - 0.5) * cell
+      target[i3 + 2] = 0.55 * Math.exp(-(u * u + w * w) / 0.07) + (rand() - 0.5) * 0.04
+
       loose[i3] = gauss(rand)
       loose[i3 + 1] = gauss(rand)
       loose[i3 + 2] = gauss(rand)
 
-      delay[i] = rand() * 0.5
+      // Builds from the shoulders up, so the face is the last thing to land.
+      delay[i] = 0.42 * (1 - r / rows) + rand() * 0.16
       size[i] = 0.06 + rand() * 0.06
       spin[i3] = rand() * Math.PI
       spin[i3 + 1] = rand() * Math.PI
       spin[i3 + 2] = rand() * Math.PI
       seed[i] = rand() * 100
-      accent[i] = rand() < 0.08 ? 1 : 0
     }
-    geo.dispose()
-    return { target, loose, delay, size, spin, seed, accent }
-  }, [count])
+    return { target, loose, delay, size, spin, seed, cell }
+  }, [portrait, count])
+
+  // Each part fades from its theme colour (loose) to its portrait colour (landed).
+  const palette = useMemo(() => {
+    const from = new Float32Array(count * 3)
+    const to = new Float32Array(count * 3)
+    const base = new THREE.Color(colors.base)
+    const acc = new THREE.Color(colors.accent)
+    const lift = luminance(colors.bg) < 0.2 ? 0.16 : 0
+    const rand = makeRandom(1305)
+    const { cells } = portrait
+    for (let i = 0; i < count; i++) {
+      const i3 = i * 3
+      ;(rand() < 0.08 ? acc : base).toArray(from, i3)
+      portraitColor(cells[i * 5 + 2], cells[i * 5 + 3], cells[i * 5 + 4], lift).toArray(to, i3)
+    }
+    return { from, to }
+  }, [colors, portrait, count])
 
   // Colours go on before the first frame renders, so the parts never flash white.
   useLayoutEffect(() => {
     const m = mesh.current
     if (!m) return
-    const base = new THREE.Color(colors.base)
-    const acc = new THREE.Color(colors.accent)
-    for (let i = 0; i < count; i++) m.setColorAt(i, data.accent[i] ? acc : base)
+    for (let i = 0; i < count; i++) m.setColorAt(i, tmp.fromArray(palette.from, i * 3))
     m.instanceColor.needsUpdate = true
-  }, [colors, count, data])
+  }, [palette, count])
 
   useFrame((state, dt) => {
     const m = mesh.current
     if (!m) return
     const t = state.clock.elapsedTime
-    const step = Math.min(1, dt * 5)
+    const step = Math.min(1, dt * 4)
 
     smooth.current += (progressRef.current - smooth.current) * step
     const p = smooth.current
 
     const pt = pointerRef.current
     const tstep = Math.min(1, dt * 2.5)
-    tilt.current.x += (-clamp(pt.y, -1.6, 1.6) * 0.28 - tilt.current.x) * tstep
-    tilt.current.y += (clamp(pt.x, -1.6, 1.6) * 0.42 - tilt.current.y) * tstep
+    tilt.current.x += (-clamp(pt.y, -1.6, 1.6) * 0.22 - tilt.current.x) * tstep
+    tilt.current.y += (clamp(pt.x - 0.45, -1.6, 1.6) * 0.38 - tilt.current.y) * tstep
 
-    const knot = frameKnot(viewport)
-    const rx = 0.32 + tilt.current.x
-    const ry = t * 0.16 + tilt.current.y
-    const rz = 0.12
-    knotRot.makeRotationFromEuler(euler.set(rx, ry, rz))
+    const frame = framePortrait(viewport)
+    // The face looks around a little on its own, and toward the cursor when there is one.
+    const rx = 0.04 + tilt.current.x + Math.sin(t * 0.31) * 0.04
+    const ry = -0.12 + tilt.current.y + Math.sin(t * 0.23) * 0.1
+    const rz = 0
+    frameRot.makeRotationFromEuler(euler.set(rx, ry, rz))
 
     // One standard deviation of the loose cloud, in world units. It reaches the whole viewport
-    // but stays densest around the knot.
-    const portrait = viewport.aspect < 1
-    const sx = knot.W * (portrait ? 0.5 : 0.4)
-    const sy = knot.H * (portrait ? 0.22 : 0.44)
+    // but stays densest around the portrait.
+    const portraitView = viewport.aspect < 1
+    const sx = frame.W * (portraitView ? 0.5 : 0.4)
+    const sy = frame.H * (portraitView ? 0.22 : 0.44)
     const sz = 0.8
 
     // Cursor on the z = 0 plane, in world units.
-    const cx = pt.x * knot.W
-    const cy = pt.y * knot.H
+    const cx = pt.x * frame.W
+    const cy = pt.y * frame.H
     const R = 0.8
 
-    const { target, loose, delay, size, spin, seed } = data
+    const { target, loose, delay, size, spin, seed, cell } = data
+    const tile = cell * 0.86
+    const col = m.instanceColor.array
+    const { from, to } = palette
     for (let i = 0; i < count; i++) {
       const i3 = i * 3
       const d = delay[i]
       const k = smoothstep(clamp((p - d) / (1 - d), 0, 1))
       const open = 1 - k
 
-      const lx = knot.x + loose[i3] * sx + Math.sin(t * 0.5 + seed[i]) * 0.16 * open
-      const ly = knot.y + loose[i3 + 1] * sy + Math.cos(t * 0.4 + seed[i] * 1.3) * 0.16 * open
+      const lx = frame.x + loose[i3] * sx + Math.sin(t * 0.5 + seed[i]) * 0.16 * open
+      const ly = frame.y + loose[i3 + 1] * sy + Math.cos(t * 0.4 + seed[i] * 1.3) * 0.16 * open
       const lz = loose[i3 + 2] * sz + Math.sin(t * 0.45 + seed[i] * 0.7) * 0.16 * open
 
       let x = lx
       let y = ly
       let z = lz
       if (k > 0) {
-        v.set(target[i3], target[i3 + 1], target[i3 + 2]).applyMatrix4(knotRot).multiplyScalar(knot.scale)
-        x += (v.x + knot.x - lx) * k
-        y += (v.y + knot.y - ly) * k
+        v.set(target[i3], target[i3 + 1], target[i3 + 2]).applyMatrix4(frameRot).multiplyScalar(frame.scale)
+        x += (v.x + frame.x - lx) * k
+        y += (v.y + frame.y - ly) * k
         z += (v.z - lz) * k
       }
 
@@ -158,31 +194,37 @@ function Parts({ count, progressRef, pointerRef }) {
           const amt = (f * f * 0.55) / proj
           x += (dx / dist) * amt
           y += (dy / dist) * amt
+          z += f * f * 0.4
         }
       }
 
       dummy.position.set(x, y, z)
       dummy.rotation.set(
-        spin[i3] + t * 0.3 * open + rx * k,
-        spin[i3 + 1] + t * 0.2 * open + ry * k,
-        spin[i3 + 2] + rz * k,
+        spin[i3] * open + t * 0.3 * open + rx * k,
+        spin[i3 + 1] * open + t * 0.2 * open + ry * k,
+        spin[i3 + 2] * open + rz * k,
       )
-      dummy.scale.setScalar(size[i] * (0.7 + 0.3 * k) * (0.85 + 0.15 * knot.scale))
+      dummy.scale.setScalar((size[i] * open + tile * k) * frame.scale)
       dummy.updateMatrix()
       m.setMatrixAt(i, dummy.matrix)
+
+      col[i3] = from[i3] + (to[i3] - from[i3]) * k
+      col[i3 + 1] = from[i3 + 1] + (to[i3 + 1] - from[i3 + 1]) * k
+      col[i3 + 2] = from[i3 + 2] + (to[i3 + 2] - from[i3 + 2]) * k
     }
     m.instanceMatrix.needsUpdate = true
+    m.instanceColor.needsUpdate = true
   })
 
   return (
     <instancedMesh ref={mesh} args={[undefined, undefined, count]} frustumCulled={false}>
       <boxGeometry args={[1, 1, 1]} />
-      <meshStandardMaterial roughness={0.55} metalness={0.08} flatShading />
+      <meshStandardMaterial roughness={0.6} metalness={0.05} flatShading />
     </instancedMesh>
   )
 }
 
-export default function HeroScene({ count, progressRef, active }) {
+export default function HeroScene({ portrait, progressRef, active }) {
   const wrapRef = useRef(null)
   const pointerRef = useRef({ x: 0, y: 0, active: false })
 
@@ -219,10 +261,10 @@ export default function HeroScene({ count, progressRef, active }) {
         style={{ background: 'transparent' }}
       >
         <SceneFog near={7.4} far={11.2} />
-        <ambientLight intensity={1.1} />
-        <directionalLight position={[4, 6, 5]} intensity={2.4} />
-        <directionalLight position={[-5, -2, -4]} intensity={0.9} />
-        <Parts count={count} progressRef={progressRef} pointerRef={pointerRef} />
+        <ambientLight intensity={1.5} />
+        <directionalLight position={[3, 5, 6]} intensity={1.9} />
+        <directionalLight position={[-5, -2, -4]} intensity={0.6} />
+        <Parts portrait={portrait} progressRef={progressRef} pointerRef={pointerRef} />
       </Canvas>
     </div>
   )

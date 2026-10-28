@@ -10,10 +10,11 @@ Motion comes from three libraries:
 
 - **Three.js + react-three-fiber** for two scenes built from small instanced "parts", sharing
   the helpers in `src/lib/parts.js` and loaded lazily so they never block first paint. In the
-  hero (`src/components/HeroScene.jsx`) up to 2,400 parts fill the viewport and sort themselves
-  into a torus knot as you scroll, nudged by the cursor. In Contact (`src/components/PlaneScene.jsx`)
+  hero (`src/components/HeroScene.jsx`) about 1,500 parts assemble into a cube mosaic of my avatar
+  on load (sampled from `src/assets/avatar.png` into `src/data/portrait.js`), turn toward and get
+  pushed around by the cursor, and drift apart as the hero scrolls away. In Contact (`src/components/PlaneScene.jsx`)
   1,000 of them fold into a paper plane that leans toward the cursor; the figure is a mailto link.
-- **GSAP ScrollTrigger** for the pinned hero, image parallax, the experience rules and dates,
+- **GSAP ScrollTrigger** for the hero's assemble-and-scatter, image parallax, the experience rules and dates,
   the About pull-quote, the footer masthead, and the nav progress line.
 - **Lenis** for smooth scrolling. Everything respects `prefers-reduced-motion`: the scene
   becomes a static grid and the scroll effects switch off.

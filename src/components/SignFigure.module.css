@@ -14,6 +14,10 @@
   stroke-linecap: round;
 }
 
+.frame {
+  transition: opacity 0.35s ease;
+}
+
 .box {
   fill: none;
   stroke: var(--accent);
@@ -34,36 +38,17 @@
   letter-spacing: 0.06em;
 }
 
-.hand {
-  transform-box: fill-box;
-  transform-origin: center;
-  animation: breathe 5s ease-in-out infinite;
+.letter {
+  fill: rgba(239, 234, 224, 0.2);
+  font-family: var(--font-display);
+  font-size: 26px;
+  transition: fill 0.3s ease;
 }
 
-.bone {
-  stroke: rgba(239, 234, 224, 0.75);
-  stroke-width: 1.6;
-  stroke-linecap: round;
-}
-
-.joint {
-  fill: var(--accent);
-  stroke: #0d0f12;
-  stroke-width: 1;
-}
-
-.wrist {
+.typed {
   fill: #efeae0;
-  stroke: #0d0f12;
-  stroke-width: 1;
 }
 
-@keyframes breathe {
-  0%,
-  100% {
-    transform: translate(23px, 6px) scale(0.9) rotate(0deg);
-  }
-  50% {
-    transform: translate(25px, 4px) scale(0.92) rotate(-2deg);
-  }
+.now {
+  fill: var(--accent);
 }

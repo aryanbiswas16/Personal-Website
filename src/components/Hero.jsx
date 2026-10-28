@@ -1,5 +1,6 @@
 import { lazy, Suspense, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { site, resumeUrl } from '../data/site.js'
+import { portraitLarge, portraitSmall } from '../data/portrait.js'
 import { gsap, ScrollTrigger, prefersReducedMotion } from '../lib/scroll.js'
 import { hasWebGL } from '../lib/parts.js'
 import { ArrowDown, ArrowUpRight } from './Icons.jsx'
@@ -19,39 +20,29 @@ const HEADLINE = [
   { t: 'parts.', em: true },
 ]
 
-function partCount() {
-  const w = window.innerWidth
-  if (w < 900) return 700
-  if (w < 1400) return 1300
-  return 1800
-}
+const pickPortrait = () => (window.innerWidth < 900 ? portraitSmall : portraitLarge)
 
-/** Static stand-in for the 3D scene: the parts, already sorted into a tidy grid. */
-function PartsFallback() {
-  const cols = 18
-  const rows = 22
-  const cells = []
-  let seed = 7
-  for (let r = 0; r < rows; r++) {
-    for (let c = 0; c < cols; c++) {
-      seed = (seed * 16807) % 2147483647
-      const accent = seed / 2147483647 < 0.08
-      cells.push(
-        <rect
-          key={`${r}-${c}`}
-          x={c * 10 + 2}
-          y={r * 10 + 2}
-          width="6"
-          height="6"
-          rx="1"
-          fill={accent ? 'var(--parts-accent)' : 'var(--parts)'}
-        />,
-      )
-    }
+/** Static stand-in for the 3D scene: the portrait, already assembled. */
+function PortraitFallback() {
+  const { cols, rows, cells } = portraitLarge
+  const tiles = []
+  for (let i = 0; i < cells.length; i += 5) {
+    const [c, r, red, green, blue] = cells.slice(i, i + 5)
+    tiles.push(
+      <rect
+        key={i}
+        x={c * 10 + 1}
+        y={r * 10 + 1}
+        width="8"
+        height="8"
+        rx="1"
+        fill={`rgb(${red} ${green} ${blue})`}
+      />,
+    )
   }
   return (
     <svg className={s.fallback} viewBox={`0 0 ${cols * 10} ${rows * 10}`} aria-hidden="true">
-      {cells}
+      {tiles}
     </svg>
   )
 }
@@ -64,42 +55,45 @@ export default function Hero() {
   const [sceneActive, setSceneActive] = useState(true)
   const [scene] = useState(() => ({
     live: hasWebGL() && !prefersReducedMotion(),
-    count: partCount(),
+    portrait: pickPortrait(),
+    poke: window.matchMedia('(pointer: fine)').matches,
   }))
 
-  // Scroll drives the sorting. On wide screens the hero holds still while it happens.
+  // The parts assemble into the portrait on load, then drift apart again as the hero scrolls away.
   useLayoutEffect(() => {
     if (prefersReducedMotion()) {
       progressRef.current = 1
       setSorted(true)
       return undefined
     }
-    const mm = gsap.matchMedia()
-    mm.add({ desktop: '(min-width: 900px)', mobile: '(max-width: 899px)' }, (ctx) => {
-      const { desktop } = ctx.conditions
-      let wasSorted = false
-      ScrollTrigger.create({
-        trigger: stageRef.current,
-        start: 'top top',
-        end: desktop ? '+=75%' : '+=45%',
-        pin: desktop,
-        anticipatePin: desktop ? 1 : 0,
-        onUpdate: (self) => {
-          progressRef.current = self.progress
-          const now = self.progress > 0.9
-          if (now !== wasSorted) {
-            wasSorted = now
-            setSorted(now)
-          }
-        },
-      })
+    const state = { intro: 0, scroll: 0 }
+    let wasSorted = false
+    const update = () => {
+      progressRef.current = state.intro * (1 - 0.7 * state.scroll)
+      const now = progressRef.current > 0.9
+      if (now !== wasSorted) {
+        wasSorted = now
+        setSorted(now)
+      }
+    }
+    const intro = gsap.to(state, { intro: 1, duration: 2.8, delay: 0.9, ease: 'power2.inOut', onUpdate: update })
+    const exit = ScrollTrigger.create({
+      trigger: stageRef.current,
+      start: 'top top',
+      end: 'bottom top',
+      onUpdate: (self) => {
+        state.scroll = self.progress
+        update()
+      },
     })
-    return () => mm.revert()
+    return () => {
+      intro.kill()
+      exit.kill()
+    }
   }, [])
 
-  // Only render the scene while it's on screen. ScrollTrigger re-parents the pinned stage while it
-  // sets up, which the observer reports as a detached (rootBounds-less) "not intersecting" entry,
-  // sometimes batched with the re-attach. Only the latest real measurement counts.
+  // Only render the scene while it's on screen. Ignore entries without rootBounds, which the
+  // observer can report while the layout settles; only the latest real measurement counts.
   useEffect(() => {
     const el = sceneRef.current
     if (!el) return undefined
@@ -114,6 +108,8 @@ export default function Hero() {
     return () => io.disconnect()
   }, [])
 
+  const parts = scene.portrait.cells.length / 5
+
   return (
     <section id="top" className={s.hero}>
       <div ref={stageRef} className={s.stage}>
@@ -121,10 +117,10 @@ export default function Hero() {
         <div ref={sceneRef} className={s.layer} aria-hidden="true">
           {scene.live ? (
             <Suspense fallback={null}>
-              <HeroScene count={scene.count} progressRef={progressRef} active={sceneActive} />
+              <HeroScene portrait={scene.portrait} progressRef={progressRef} active={sceneActive} />
             </Suspense>
           ) : (
-            <PartsFallback />
+            <PortraitFallback />
           )}
         </div>
 
@@ -132,22 +128,31 @@ export default function Hero() {
           <div className={s.copy}>
             <p className={`label ${s.eyebrow}`}>
               <span className={s.dot} aria-hidden="true" />
-              <span>Available</span>
+              <span>Now at TCS Pace Port</span>
               <span className={`${s.sep} ${s.roleSeg}`} aria-hidden="true">
                 ·
               </span>
-              <span className={s.roleSeg}>{site.role}</span>
+              <span className={s.roleSeg}>AI/ML engineer</span>
               <span className={s.sep} aria-hidden="true">
                 ·
               </span>
               <span>{site.location}</span>
             </p>
 
+            <p className={s.hello}>
+              <span className={s.mask}>
+                <span className={s.word} style={{ animationDelay: '80ms' }}>
+                  Hi, I’m Aryan.
+                </span>
+              </span>
+            </p>
+
             <h1 className={s.headline}>
+              <span className="visually-hidden">Aryan Biswas. </span>
               {HEADLINE.map((w, i) => (
                 <span key={i}>
                   <span className={s.mask}>
-                    <span className={s.word} style={{ animationDelay: `${120 + i * 55}ms` }}>
+                    <span className={s.word} style={{ animationDelay: `${220 + i * 55}ms` }}>
                       {w.em ? <em>{w.t}</em> : w.t}
                     </span>
                   </span>{' '}
@@ -156,11 +161,11 @@ export default function Hero() {
             </h1>
 
             <p className={s.lede}>
-              I’m Aryan Biswas, a software developer and AI engineer in Toronto, Queen’s Computing
-              class of 2026. I take messy problems and turn them into clean, working systems. Lately:
-              a generative-AI platform at BMO that turns Figma designs into production Angular, an LLM
-              system that migrates legacy code, and DeepfakeGuard, a multimodal deepfake detector
-              published at CUCAI 2026. Also one comedy-horror game about getting home for dinner.
+              I’m an AI/ML engineer at TCS Pace Port in Toronto and a 2026 Queen’s Computing grad.
+              Right now I’m teaching computer vision to read flotation froth for one of the world’s
+              largest mining companies. Before that: a generative-AI platform at BMO that turns Figma designs into
+              production Angular, and DeepfakeGuard, a deepfake detector published at CUCAI 2026.
+              Also one comedy-horror game about getting home for dinner.
             </p>
 
             <div className={s.cta}>
@@ -178,10 +183,8 @@ export default function Hero() {
         </div>
 
         <p className={`container mono ${s.caption}`} aria-live="polite">
-          <span>
-            Fig. 01 — {scene.count.toLocaleString()} parts, {sorted ? 'sorted' : 'loose'}
-          </span>
-          <span>{sorted ? 'Messy in, clean out.' : 'Scroll to sort them'}</span>
+          <span>Fig. 01 — The author, in {parts.toLocaleString()} parts</span>
+          <span>{sorted ? (scene.poke && scene.live ? 'Go on, poke it.' : 'Messy in, clean out.') : 'Assembling…'}</span>
         </p>
       </div>
 
